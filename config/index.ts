@@ -70,6 +70,12 @@ export default defineConfig(async (merge, { command, mode }) => {
         chunkFilename: 'css/[name].[chunkhash].css'
       },
       postcss: {
+        // enable: 'true',
+        // "config": {
+        //   "scale": 0.5, //缩放为1/2
+        //   "units": "rem",
+        //   "includes": ["taro-ui"]
+        // },
         autoprefixer: {
           enable: true,
           config: {}

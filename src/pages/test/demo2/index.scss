@@ -1,0 +1,19 @@
+  div {
+      margin: 0em;
+      padding: 2em;
+      font-size: 14px;
+  }
+
+  #src_copy, #src_move {
+      color: blue;
+      border: 5px solid black;
+      max-width: 300px;
+      width: fit-content;
+      height: 50px;
+  }
+
+  #dest_copy, #dest_move {
+      border: 5px solid blue;
+      width: 300px;
+      min-height: 50px;
+  }

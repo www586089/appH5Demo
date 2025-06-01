@@ -1,7 +1,23 @@
 .container {
     background-color: bisque;
+    padding: 24px 12px;
 }
 
-.item{
+.item {
     background-color: darkorchid;
+    border-radius: 8px;
+    height: 96px;
+
+
+}
+.droparea:-moz-drag-over {
+  border: 1px solid black;
+}
+.source {
+    background-color: darkblue;
+    color: aliceblue;
+}
+.target {
+    height: 360px;
+    background-color: lightsalmon;
 }
