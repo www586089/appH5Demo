@@ -71,6 +71,8 @@ export default function Index() {
 
   useLoad(() => {
     console.log('Page loaded.')
+    console.log('call -> showEventProperties222')
+    showEventProperties();
   })
 
   function DropableArea() {
@@ -114,7 +116,7 @@ export default function Index() {
     // let image = new Image()
     // image.src = dragImg
     // ev.dataTransfer.setDragImage(image, 10, 10);
-    ev.dataTransfer.dropEffect = "copy";
+    ev.dataTransfer.dropEffect = "move";
     Taro.showToast({
       title: 'onDragStart'
     })
@@ -148,11 +150,61 @@ export default function Index() {
 
   const listItems = items.map(item => ItemView(item))
 
+  function showEventProperties() {
+    function addCell(row, text) {
+      const cell = row.insertCell(-1);
+      cell.appendChild(document.createTextNode(text));
+    }
+
+    const event = window.event;
+    const element = document.getElementById('eventType')
+    if (null == element || null == event || undefined == element || undefined == event) {
+      console.log('event element is null')
+      return
+    }
+    element.innerHTML = event.type;
+
+    const table = document.createElement("table");
+    const thead = table.createTHead();
+    let row = thead.insertRow(-1);
+    const labelList = ["#", "Property", "Value"];
+    const len = labelList.length;
+
+    for (let i = 0; i < len; i++) {
+      addCell(row, labelList[i]);
+    }
+
+    const tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+
+    for (const p in event) {
+      row = tbody.insertRow(-1);
+      row.className = row.rowIndex % 2 ? "odd" : "even";
+      addCell(row, row.rowIndex);
+      addCell(row, p);
+      addCell(row, event[p]);
+    }
+
+    document.body.appendChild(table);
+  }
+
+  window.onload = (event) => {
+    console.log('call -> showEventProperties')
+    showEventProperties();
+  };
+  function EventAttri() {
+    return (
+      <>
+        <h1 className='h1Tag'>DOM <span id='eventType'></span> 事件对象的属性列表</h1>
+      </>
+    )
+  }
   return (
     <View className='container'>
       <ul>{listItems}</ul>
       <DraggableText />
       <DropableArea />
+      <EventAttri />
     </View>
   )
 }
