@@ -26,10 +26,11 @@ export default function Index() {
   function drag_handler(ev) {
     console.log('drag_handler')
   }
-  function dragstart_handler(ev: DragEvent) {
+  function dragstart_handler(ev) {
     console.log('dragstart_handler')
     // Add the target element's id to the data transfer object
     let sourceElementId = ev.target.id
+    console.log('dragstart_handler->sourceElementId = ' + sourceElementId)
     ev.dataTransfer.setData("text/plain", sourceElementId);
     ev.dataTransfer.effectAllowed = 'move'
     ev.dataTransfer.dropEffect = "move";
@@ -64,6 +65,7 @@ export default function Index() {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
     var sourceElementId = ev.dataTransfer.getData("text/plain");
+    console.log('drop_handler->sourceElementId = ' + sourceElementId)
     ev.target.appendChild(document.getElementById(sourceElementId));
   }
 
@@ -104,12 +106,14 @@ export default function Index() {
 
   function handleOnDragStart(ev) {
     // 添加拖拽数据
-    ev.dataTransfer.setData("text/plain", ev.target.innerText);
-    ev.dataTransfer.setData("text/html", ev.target.outerHTML);
-    ev.dataTransfer.setData("text/uri-list", ev.target.ownerDocument.location.href);
-    let image = new Image()
-    image.src = dragImg
-    ev.dataTransfer.setDragImage(image, 10, 10);
+    // ev.dataTransfer.setData("text/plain", ev.target.innerText);
+    // ev.dataTransfer.setData("text/html", ev.target.outerHTML);
+    // ev.dataTransfer.setData("text/uri-list", ev.target.ownerDocument.location.href);
+    let sourceElementId = ev.target.id
+    ev.dataTransfer.setData("text/plain", sourceElementId);
+    // let image = new Image()
+    // image.src = dragImg
+    // ev.dataTransfer.setDragImage(image, 10, 10);
     ev.dataTransfer.dropEffect = "copy";
     Taro.showToast({
       title: 'onDragStart'
@@ -132,6 +136,7 @@ export default function Index() {
   function ItemView(item: PoteItem) {
     return (
       <li key={item.id}
+        id={item.id}
         className='item'
         draggable='true'
         onDragStart={handleOnDragStart}
