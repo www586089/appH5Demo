@@ -40,6 +40,7 @@
   "author": "",
   "dependencies": {
     "@babel/runtime": "^7.21.5",
+    "@dnd-kit/helpers": "^0.1.18",
     "@dnd-kit/react": "^0.1.18",
     "@tarojs/components": "3.6.30",
     "@tarojs/helper": "3.6.30",
