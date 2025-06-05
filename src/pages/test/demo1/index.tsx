@@ -106,34 +106,49 @@ export default function Index() {
     )
   }
 
+  var sourceElement: Element
+
   function handleOnDragStart(ev) {
     // 添加拖拽数据
-    // ev.dataTransfer.setData("text/plain", ev.target.innerText);
-    // ev.dataTransfer.setData("text/html", ev.target.outerHTML);
-    // ev.dataTransfer.setData("text/uri-list", ev.target.ownerDocument.location.href);
+    sourceElement = ev.target
     let sourceElementId = ev.target.id
     ev.dataTransfer.setData("text/plain", sourceElementId);
-    // let image = new Image()
-    // image.src = dragImg
-    // ev.dataTransfer.setDragImage(image, 10, 10);
-    ev.dataTransfer.dropEffect = "move";
-    Taro.showToast({
-      title: 'onDragStart'
-    })
+    // ev.dataTransfer.dropEffect = "move";
   }
 
   function handleOnDragOver(ev) {
     ev.preventDefault();
-    ev.dataTransfer.dropEffect = "move";
+    // ev.dataTransfer.dropEffect = "move";
   }
 
   function handleOnDragDrop(ev) {
     ev.preventDefault();
     // Get the id of the target and add the moved element to the target's DOM
     var data = ev.dataTransfer.getData("text/plain");
-    ev.target.appendChild(document.getElementById(data));
+    var target = ev.target;
+    // ev.target.appendChild(document.getElementById(data));
+    if (_index(sourceElement) < _index(target)) {
+      //nextSibling 属性可返回某个元素之后紧跟的节点（处于同一树层级中）。
+      target.parentNode.insertBefore(sourceElement, target.nextSibling);
+    } else {
+      target.parentNode.insertBefore(sourceElement, target);
+    }
   }
 
+  function _index(el) {
+    var index = 0;
+
+    if (!el || !el.parentNode) {
+      return -1;
+    }
+    //previousElementSibling属性返回指定元素的前一个兄弟元素（相同节点树层中的前一个元素节点）。
+    while (el && (el = el.previousElementSibling)) {
+      //console.log(el);
+      index++;
+    }
+
+    return index;
+  }
 
   function ItemView(item: PoteItem) {
     return (
@@ -141,9 +156,7 @@ export default function Index() {
         id={item.id}
         className='item'
         draggable='true'
-        onDragStart={handleOnDragStart}
-        onDragOver={handleOnDragOver}
-        onDrop={handleOnDragDrop}
+
       >{item.descInfo}</li>
     )
   }
@@ -201,10 +214,13 @@ export default function Index() {
   }
   return (
     <View className='container'>
-      <ul>{listItems}</ul>
-      <DraggableText />
+      <ul onDragStart={handleOnDragStart}
+        onDragOver={handleOnDragOver}
+        onDrop={handleOnDragDrop}
+      >{listItems}</ul>
+      {/* <DraggableText />
       <DropableArea />
-      <EventAttri />
+      <EventAttri /> */}
     </View>
   )
 }

@@ -1150,6 +1150,61 @@
   dependencies:
     stackframe "^1.1.1"
 
+"@dnd-kit/abstract@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/abstract/-/abstract-0.1.18.tgz#4357a9d72e82082c64998a498de1b8ed9825083a"
+  integrity sha512-oe2i/Y8iprBZFVSLQ2graHusxO6rf3T9X1JclV9KZ5VKgon1lKr6Kv/Jm7GSz1OmmeHYy9yC1jeZJRr53PGTzQ==
+  dependencies:
+    "@dnd-kit/geometry" "^0.1.18"
+    "@dnd-kit/state" "^0.1.18"
+    tslib "^2.6.2"
+
+"@dnd-kit/collision@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/collision/-/collision-0.1.18.tgz#1d47c8edd86b527cd342e69915997a9c7e1e497b"
+  integrity sha512-xqc6yfzyP+nLupssKZy7VAkn8119k6J1gpmPJdzQAIjDwlnQuceUP5MZSFnZ4RztW9Gzky6lirMp/eMJnzaZ0g==
+  dependencies:
+    "@dnd-kit/abstract" "^0.1.18"
+    "@dnd-kit/geometry" "^0.1.18"
+    tslib "^2.6.2"
+
+"@dnd-kit/dom@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/dom/-/dom-0.1.18.tgz#b89f2dea8d15b90ffe8b7a8b4a181f353a82c542"
+  integrity sha512-sG9j7Nm+DOz2XmdJXH9CLnoMKFSL7UPT46nh/C8gmTK2yCgP3JNL6WbKVD7rFzStsw0lfbCdudEPKCqNpfdcqQ==
+  dependencies:
+    "@dnd-kit/abstract" "^0.1.18"
+    "@dnd-kit/collision" "^0.1.18"
+    "@dnd-kit/geometry" "^0.1.18"
+    "@dnd-kit/state" "^0.1.18"
+    tslib "^2.6.2"
+
+"@dnd-kit/geometry@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/geometry/-/geometry-0.1.18.tgz#f2334e4d726cc414fa2ad7668d9e8e0b74f35e68"
+  integrity sha512-il+RqQ/EJ/AWy/yvfLdHvnvhVonU7xV5DaazWAiRSUginjkFxkJkyAooy19ETSEGQJlWXAo1zvMVUaJfOdI7zg==
+  dependencies:
+    "@dnd-kit/state" "^0.1.18"
+    tslib "^2.6.2"
+
+"@dnd-kit/react@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/react/-/react-0.1.18.tgz#7729091c311f6a02b061754a3e7fecc26d106fde"
+  integrity sha512-OCeCO9WbKnN4rVlEOEe9QWxSIFzP0m/fBFmVYfu2pDSb4pemRkfrvCsI/FH3jonuESYS8qYnN9vc8Vp3EiCWCA==
+  dependencies:
+    "@dnd-kit/abstract" "^0.1.18"
+    "@dnd-kit/dom" "^0.1.18"
+    "@dnd-kit/state" "^0.1.18"
+    tslib "^2.6.2"
+
+"@dnd-kit/state@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/state/-/state-0.1.18.tgz#4d55e78e98d8625024f81a928f79af608ab3487e"
+  integrity sha512-LRcu4pmSP5KLRN1FWY3tqpi6MaNZ39+CX7RUNM8yVla8umDRd78jlkKYbSyDHUYzYujUCFeQvOCTRD43RqRG3Q==
+  dependencies:
+    "@preact/signals-core" "^1.8.0"
+    tslib "^2.6.2"
+
 "@esbuild/aix-ppc64@0.19.12":
   version "0.19.12"
   resolved "https://registry.yarnpkg.com/@esbuild/aix-ppc64/-/aix-ppc64-0.19.12.tgz#d1bc06aedb6936b3b6d313bf809a5a40387d2b7f"
@@ -1777,6 +1832,11 @@
     loader-utils "^2.0.4"
     schema-utils "^4.2.0"
     source-map "^0.7.3"
+
+"@preact/signals-core@^1.8.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@preact/signals-core/-/signals-core-1.9.0.tgz#cfdd5bd28051b20c528689a68b92e31d53873dba"
+  integrity sha512-uUgFHJLWxb33rfCtb1g+1e3Rg7Jl5EALhGTHlQ5Y0w37OF+fdidYdYEE6crbpUOYDOjlmelIWf0ulXr1ggfUkg==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -4161,6 +4221,11 @@ cjs-module-lexer@^1.0.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-1.4.3.tgz#0f79731eb8cfe1ec72acd4066efac9d61991b00d"
   integrity sha512-9z8TZaGM1pfswYeXrUpzPrkx8UnWYdhJclsiYMm6x/w5+nN+8Tf/LnAgfLGQCm59qAOxU8WwHEq2vNwF6i4j+Q==
+
+classnames@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
 
 classnames@^2.2.5:
   version "2.5.1"
@@ -10286,6 +10351,14 @@ react-refresh@^0.4.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.4.3.tgz#966f1750c191672e76e16c2efa569150cc73ab53"
   integrity sha512-Hwln1VNuGl/6bVwnd0Xdn1e84gT/8T9aYNL+HAKDArLCS7LWjwr7StE30IEYbIkx0Vi3vs+coQxe+SQDbGbbpA==
 
+react-sortablejs@^6.1.4:
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/react-sortablejs/-/react-sortablejs-6.1.4.tgz#420ebfab602bbd935035dec24a04c8b3b836dbbf"
+  integrity sha512-fc7cBosfhnbh53Mbm6a45W+F735jwZ1UFIYSrIqcO/gRIFoDyZeMtgKlpV4DdyQfbCzdh5LoALLTDRxhMpTyXQ==
+  dependencies:
+    classnames "2.3.1"
+    tiny-invariant "1.2.0"
+
 react@^18.0.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
@@ -11079,6 +11152,11 @@ sort-keys@^2.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sortablejs@^1.15.6:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.6.tgz#ff93699493f5b8ab8d828f933227b4988df1d393"
+  integrity sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==
+
 source-list-map@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
@@ -11694,6 +11772,11 @@ tiny-case@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-case/-/tiny-case-1.0.3.tgz#d980d66bc72b5d5a9ca86fb7c9ffdb9c898ddd03"
   integrity sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==
+
+tiny-invariant@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9"
+  integrity sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==
 
 tmp@^0.0.33:
   version "0.0.33"
