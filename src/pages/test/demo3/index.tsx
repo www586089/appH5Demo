@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import './index.scss'
 import SortableView from './SortableView';
 import SortableViewV2 from './SortableViewV2';
+import PagePicker from './ActionSheet';
 // import { Sortable } from 'react-sortablejs';
 
 
@@ -311,8 +312,10 @@ export default function Index() {
     return (
         <View>
             {/* <ListView /> */}
-            <SortableViewV2 />
+            {/* <SortableViewV2 /> */}
             {/* <XXView /> */}
+            <PagePicker />
+            
         </View>
 
     )

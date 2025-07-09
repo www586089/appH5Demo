@@ -7,7 +7,7 @@ function Sortable({ id, index }) {
     const { ref } = useSortable({ id, index });
 
     return (
-        <li ref={ref} className='item'>{id}</li>
+        <li ref={ref} >{id}</li>
     );
 }
 
