@@ -4,6 +4,7 @@ export default defineAppConfig({
     'pages/test/demo1/index',
     'pages/test/demo2/index',
     'pages/test/demo3/index',
+    'pages/css/cssIndex',
   ],
   window: {
     backgroundTextStyle: 'light',
