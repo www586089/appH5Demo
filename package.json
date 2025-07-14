@@ -42,6 +42,7 @@
     "@babel/runtime": "^7.21.5",
     "@dnd-kit/helpers": "^0.1.18",
     "@dnd-kit/react": "^0.1.18",
+    "@mui/material": "^7.2.0",
     "@tarojs/components": "3.6.30",
     "@tarojs/helper": "3.6.30",
     "@tarojs/plugin-framework-react": "3.6.30",

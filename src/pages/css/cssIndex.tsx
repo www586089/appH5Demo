@@ -6,6 +6,9 @@ import klematis2_small from '../../media/klematis2_small.jpg'
 import klematis3_small from '../../media/klematis3_small.jpg'
 import klematis4_small from '../../media/klematis4_small.jpg'
 import WebSite from "./WebSite";
+import NumericKeyboard from "./keyboard/NumericKeyboard";
+import SecureInputKeyboard from "./keyboard/SecureInputKeyboard";
+import { useRef, useState } from "react";
 
 
 export default function Index() {
@@ -556,6 +559,53 @@ export default function Index() {
         )
     }
 
+    const handleConfirm = (value) => {
+        console.log('输入的值:', value);
+        alert(`您输入了: ${value}`);
+    };
+
+    function KeyBoardView() {
+        return (
+            <>
+                <div>
+                    <h1>数字键盘示例</h1>
+                    <NumericKeyboard
+                      onConfirm={handleConfirm}
+                      maxLength={5}
+                    />
+                </div>
+            </>
+        )
+    }
+
+
+    const inputRef = useRef(null);
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+    const handleInputChange = (e) => {
+        console.log('当前值:', e.target.value);
+    };
+
+    function SecureNumberView() {
+        return (
+            <>
+                <div>
+                    <input
+                      ref={inputRef}
+                      type='text'
+                      inputMode='none'  // 禁用系统键盘
+                      onChange={handleInputChange}
+                      placeholder='请使用安全键盘输入'
+                    />
+                    <SecureInputKeyboard
+                      inputRef={inputRef}
+                      maxLength={5}
+                    />
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <ScrollView>
@@ -582,6 +632,8 @@ export default function Index() {
                 <CSSFloatTestView />
                 <WebSite />
                 <CssAlignView />
+                <KeyBoardView />
+                <SecureNumberView />
 
             </ScrollView>
         </>
