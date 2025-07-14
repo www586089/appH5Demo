@@ -1,87 +1,123 @@
-#para1
-{
-    text-align:center;
-    color:red;
-    font-size: 32px;
-}
-#pId
-{
-    font-size: 18px;
+#para1 {
+  text-align: center;
+  color: red;
+  font-size: 32px;
 }
 
-.para2
-{
-    text-align:center;
-    color:red;
-    font-size: 32px;
+#pId {
+  font-size: 18px;
+}
+
+.para2 {
+  text-align: center;
+  color: red;
+  font-size: 32px;
 }
 
 .chp-head {
-    font-size: 32px;
-    color: #ff0000;
-    text-align: start;
+  font-size: 32px;
+  color: #ff0000;
+  text-align: start;
 }
 
 //多个选择器一起使用
 .center {
-	text-align:center;
-    font-size: 32px;
+  text-align: center;
+  font-size: 32px;
 }
+
 .color {
-	color:#ff0000;
+  color: #ff0000;
 }
 
-#customers
-{
-	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
-	
-    display: block;//设置了这个才看到margin padding生效 ？
-	border-collapse:collapse;
-    padding: 24px 16px; //上下/左右
-    margin: 24px 16px;//上下/左右
-}
-#customers td, #customers th 
-{
-	font-size:0.5em;
-	border:1px solid #98bf21;
-	padding:3px 7px 2px 7px;
-}
-#customers th 
-{
-	font-size:1em;
-	text-align:left;
-	padding-top:5px;
-	padding-bottom:4px;
-	background-color:#A7C942;
-	color:#ffffff;
-}
-#customers tr.alt td 
-{
-	color:#000000;
-	background-color:#EAF2D3;
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+  display: block; //设置了这个才看到margin padding生效 ？
+  border-collapse: collapse;
+  padding: 24px 16px; //上下/左右
+  margin: 24px 16px; //上下/左右
 }
 
-p.none {border-style:none;}
-p.dotted {border-style:dotted;}
-p.dashed {border-style:dashed;}
-p.solid {border-style:solid;}
-p.double {border-style:double;}
-p.groove {border-style:groove;}
-p.ridge {border-style:ridge;}
-p.inset {border-style:inset;}
-p.outset {border-style:outset;}
-p.hidden {border-style:hidden;}
-p.mix {border-style: dotted dashed solid double;}
+#customers td,
+#customers th {
+  font-size: 0.5em;
+  border: 1px solid #98bf21;
+  padding: 3px 7px 2px 7px;
+}
+
+#customers th {
+  font-size: 1em;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  background-color: #A7C942;
+  color: #ffffff;
+}
+
+#customers tr.alt td {
+  color: #000000;
+  background-color: #EAF2D3;
+}
+
+p.none {
+  border-style: none;
+}
+
+p.dotted {
+  border-style: dotted;
+}
+
+p.dashed {
+  border-style: dashed;
+}
+
+p.solid {
+  border-style: solid;
+}
+
+p.double {
+  border-style: double;
+}
+
+p.groove {
+  border-style: groove;
+}
+
+p.ridge {
+  border-style: ridge;
+}
+
+p.inset {
+  border-style: inset;
+}
+
+p.outset {
+  border-style: outset;
+}
+
+p.hidden {
+  border-style: hidden;
+}
+
+p.mix {
+  border-style: dotted dashed solid double;
+}
 
 .desc {
-    font-size: 32px;
-    font-weight: 400;
-    font-style: normal;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aquamarine;
-    margin: 24px 16px;
-    padding: 15px;
-    border-radius: 12px;
+  font-size: 32px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: aquamarine;
+  margin: 24px 16px;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.desc p {
+  text-align: start;
+  font-size: 16px;
 }
 
 
@@ -98,9 +134,11 @@ button {
   border-image-slice: 1;
   border-width: 5px;
 }
+
 .border-gradient-purple {
   border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
 }
+
 .border-gradient-green {
   border-image-source: linear-gradient(to left, #00c853, #b2ff59);
 }
@@ -112,11 +150,12 @@ button {
 }
 
 .border-container {
-  > div {
+  >div {
     width: 50%;
-    text-align:center;
+    text-align: center;
   }
-  > div > div {
+
+  >div>div {
     width: 100%;
     padding: 1rem;
   }
@@ -126,7 +165,300 @@ button {
   background: #cf4a4a;
   height: 92px;
   justify-content: center;
+
   button {
     color: white;
   }
 }
+
+
+//outline begin
+.outline {
+  border: 1px solid red;
+  margin: 24px;
+  padding: 16px;
+  outline-style: double;
+  outline-width: 4px;
+  outline-color: #00c853;
+}
+
+.outline>.dotted1 {
+  outline-style: dotted;
+  margin-bottom: 16px;
+  outline-width: 4px;
+}
+
+.outline>.dashed1 {
+  outline-style: dashed;
+  margin-bottom: 16px;
+  outline-width: 2px;
+}
+
+.outline>.solid1 {
+  outline-style: solid;
+  margin-bottom: 16px;
+}
+
+.outline>.double1 {
+  outline-style: double;
+  margin-bottom: 16px;
+  outline-width: 4px;
+}
+
+.outline>.groove1 {
+  outline-style: groove;
+  margin-bottom: 16px;
+  outline-width: 4px;
+}
+
+.outline>.ridge1 {
+  outline-style: ridge;
+  margin-bottom: 16px;
+  outline-width: 4px;
+}
+
+.outline>.inset1 {
+  outline-style: inset;
+  margin-bottom: 16px;
+  outline-width: 4px;
+}
+
+.outline>.outset1 {
+  outline-style: outset;
+  margin-bottom: 16px;
+  outline-width: 4px;
+
+}
+
+//outline end
+
+//css group begin
+p {
+  color: blue;
+  text-align: center;
+}
+
+.marked {
+  background-color: red;
+}
+
+.marked p {
+  color: white;
+}
+
+p.marked {
+  text-decoration: underline;
+}
+
+//css group end
+
+// display hidden begin
+h4.hidden {
+  display: hidden;
+}
+
+h4.none {
+  display: none;
+}
+
+//display hidden end
+
+//posiiton begin
+div.static {
+  position: static;
+  border: 3px solid #73AD21;
+}
+
+p.pos_fixed {
+  position: fixed;
+  top: 30px;
+  right: 5px;
+}
+
+h2.pos_left {
+  position: relative;
+  left: -20px;
+}
+
+h2.pos_right {
+  position: relative;
+  left: 20px;
+}
+
+h2.pos_top {
+  position: relative;
+  top: -50px;
+}
+
+div.position_relative {
+  position: relative;
+  background-color: #00c853;
+  height: 280px;
+}
+
+h2.pos_absolute {
+  position: absolute;
+  left: 20px;
+  bottom: 5px;
+}
+
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  background-color: #cae8ca;
+  border: 2px solid #4CAF50;
+}
+
+.pad-bottom {
+  padding-bottom: 800px;
+}
+
+//position end
+
+//z-index begin
+.z-index {
+  position: relative;
+}
+
+div>img {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+}
+
+//z-index end
+
+//overflow begin
+div.ex1 {
+  background-color: lightblue;
+  width: 20%;
+  height: 110px;
+  overflow: scroll;
+  font-size: 16px;
+}
+
+div.ex2 {
+  background-color: lightblue;
+  width: 20%;
+  height: 110px;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+div.ex3 {
+  background-color: lightblue;
+  width: 20%;
+  height: 110px;
+  overflow: auto;
+  font-size: 16px;
+}
+
+div.ex4 {
+  background-color: lightblue;
+  width: 40%;
+  height: 80px;
+  overflow: visible;
+  font-size: 16px;
+}
+
+//overflow end
+
+//clip begin
+//绝对定位元素的裁剪
+.clip {
+  position: absolute;
+  clip: rect(0px, 60px, 200px, 0px);
+}
+
+.descA {
+  // z-index: 1;
+  color: gold;
+  position: relative;
+  left: 10px;
+  right: 24px;
+  width: auto;
+}
+
+//clip end
+
+// float begin
+.floatTest {
+  float: right;
+}
+
+.beatuful {
+  font-size: 18px;
+  color: black;
+  text-align: justify;
+  background-color: #98bf2180;
+  margin: 8px 24px;
+}
+
+.thumbnail {
+  float: left;
+  width: 140px;
+  height: 110px;
+  margin: 5px;
+}
+
+.clear-float {
+  clear: both;
+}
+
+p > .funny-span {
+  float: left;
+  width: 1.2em;
+  font-size: 400%;
+  font-family: algerian, courier;
+  line-height: 80%;
+}
+
+//float end
+
+//Align begin
+.acenter {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+.tcenter {
+    text-align: center;
+    border: 3px solid green;
+}
+.icenter {
+    display: block;
+    margin: 0 auto;
+}
+
+.aright {
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+
+.xcontainer {
+    position: relative;
+    width: 100%;
+    margin-top: 100px;
+}
+ 
+.xright {
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    background-color: #b0e0e6aa;
+}
+
+.fright {
+    float: right;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+//Align end
