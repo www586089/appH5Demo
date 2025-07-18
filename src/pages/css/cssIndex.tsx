@@ -1,4 +1,5 @@
 import { ScrollView, View } from "@tarojs/components";
+import { useRef, useState } from "react";
 import './index.scss'
 import cssBg from '../../media/w3css.gif'
 import klematis_small from '../../media/klematis_small.jpg'
@@ -8,7 +9,6 @@ import klematis4_small from '../../media/klematis4_small.jpg'
 import WebSite from "./WebSite";
 import NumericKeyboard from "./keyboard/NumericKeyboard";
 import SecureInputKeyboard from "./keyboard/SecureInputKeyboard";
-import { useRef, useState } from "react";
 
 
 export default function Index() {
@@ -17,7 +17,7 @@ export default function Index() {
         return (
             <>
                 <div>
-                    <h1 className='chp-head'>1、id选择器</h1>
+                    <h1 className='chp-head'>1、id选择器334</h1>
                     <p id='pId'>
                         id 选择器可以为标有特定 id 的 HTML 元素指定特定的样式。
                         HTML元素以id属性来设置id选择器,CSS 中 id 选择器以 &quot;#&quot; 来定义。

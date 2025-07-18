@@ -1,0 +1,663 @@
+.chp {
+    font-size: 24px;
+    color: black;
+    font-weight: 700;
+}
+
+.desc {
+    font-size: 18px;
+    color: #333;
+    font-weight: 400;
+    background-color: aquamarine;
+    margin: 24px 12px;
+    padding: 24px 12px;
+    border-radius: 6px;
+}
+
+p {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+div>p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+//anchor begin
+
+a:link {
+    color: #000000;
+}
+
+/* 未访问链接*/
+a:visited {
+    color: #00FF00;
+}
+
+/* 已访问链接 */
+a:hover {
+    color: #FF00FF;
+}
+
+/* 鼠标移动到链接上 */
+a:active {
+    color: #0000FF;
+}
+
+/* 鼠标点击时 */
+
+#divContainer {
+    overflow: auto;
+    height: 160px;
+    width: 260px;
+    background-color: red;
+}
+
+#divContainer::-webkit-scrollbar {
+    border-width: 1px;
+    border-color: #0000FF;
+}
+
+#firstline {
+    p:first-line {
+        color: #ff0000;
+        font-variant: small-caps;
+    }
+
+}
+
+#firstleter {
+    p:first-letter {
+        color: #ff0000;
+        font-size: xx-large;
+    }
+}
+
+#pEAndClass {
+    p.article:first-letter {
+        color: #ff0000;
+    }
+}
+
+
+//anchor end
+
+//nav begin
+
+#navul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 20%;
+    background-color: #f1f1f1;
+    border: 1px solid #555;
+}
+
+
+#navul a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#navul li {
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+#navul li:hover {
+    background-color: #555;
+    color: white;
+    border: 1px solid #555;
+}
+
+#navul li.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#navul li:last-child {
+    border-bottom: none;
+}
+
+//没有activie的元素（actiive的元素取反）的样式
+#navul a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+#website {
+    background-color: #f1f1f1;
+}
+
+#navul2 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    // background-color:  #f1f1f1;
+    position: relative;
+    float: left;
+    // height: 100%;
+    overflow: auto;
+}
+
+#navul2 li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#navul2 li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#navul2 li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+#cxx {
+    margin-left: 25%;
+    padding: 1px 16px;
+    // height: 100%;
+    background-color: #f7efef;
+}
+
+
+#inline {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+#inline li {
+    display: inline;
+    margin: 4px 8px;
+}
+
+#inline a:link,
+#inline a:visited {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #98bf21;
+    text-align: center;
+    padding: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+#inline a:hover,
+#inline a:active {
+    background-color: #7A991A;
+}
+
+
+#float-view {
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+}
+
+#float-view li {
+    float: left;
+    width: 25%;
+}
+
+#float-view a {
+    color: #000;
+    text-align: center;
+    font-size: 24px;
+    display: block;
+    width: 100%;
+    background-color: #518f56;
+    padding: 6px 0;
+    border-right: 2px solid #00FF00;
+}
+
+#float-view a:hover {
+    background-color: #555;
+    color: white;
+}
+
+
+#float-view a#active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+#float-view2 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#float-view2 li {
+    float: left;
+    width: 25%;
+}
+
+#float-view2 a:link,
+#float-view2 a:visited {
+    display: block;
+    width: auto;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #bfbac9;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+#float-view2 a:hover,
+#float-view2 a:active {
+    background-color: #e62727;
+}
+
+
+#nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#nav li {
+    float: left;
+    width: auto;
+}
+
+#nav li a {
+    font-size: 24px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav li a:hover {
+    background-color: #111;
+}
+
+#nav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#nav .active {
+    background-color: #4CAF50;
+}
+
+#nav2 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#nav2 li {
+    float: left;
+}
+
+#nav2 li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav2 li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#nav2 .active {
+    background-color: #4CAF50;
+}
+
+#nav2 #active {
+    float: right
+}
+
+
+#nav3 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#nav3 li {
+    float: left;
+    border-right: 1px solid #bbb;
+}
+
+#nav3 li:last-child {
+    border-right: none;
+}
+
+#nav3 li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav3 li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#nav3 .active {
+    background-color: #4CAF50;
+}
+
+#nav3 #active {
+    float: right
+}
+
+#nav4 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: relative; //试试fixed ?
+    bottom: 0;
+    width: 100%;
+}
+
+#nav4 li {
+    float: left;
+}
+
+#nav4 li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav4 li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#nav4 .active {
+    background-color: #4CAF50;
+}
+
+
+#nav5 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+#nav5 li {
+    float: left;
+}
+
+#nav5 li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#nav5 li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+#nav5 li a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+
+
+ul#topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul#topnav li {
+    float: left;
+}
+
+ul#topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul#topnav li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul#topnav li a.active {
+    background-color: #4CAF50;
+}
+
+ul#topnav li.right {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+
+    ul#topnav li.right,
+    ul#topnav li {
+        float: none;
+    }
+}
+
+#topnav-div {
+    padding: 0 16px;
+}
+
+//nav end   
+
+// side nav begin
+
+ul.sidenav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    background-color: #f1f1f1;
+    position: absolute;
+    height: 800px;
+}
+
+ul.sidenav li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+ul.sidenav li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.sidenav li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+div.scontent {
+    margin-left: 25%;
+    padding: 1px 16px;
+    height: 800px;
+}
+
+@media screen and (max-width: 900px) {
+    ul.sidenav {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    ul.sidenav li a {
+        float: left;
+        padding: 15px;
+    }
+
+    div.scontent {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    ul.sidenav li a {
+        text-align: center;
+        float: none;
+    }
+}
+
+//side nav end
+
+//drop down begin
+
+#dropnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #999;
+    overflow: hidden;
+    /*        注意: overflow:hidden 添加到 ul 元素,以防止 li 元素列表的外出(当li{float:left}时)。         来源链接：https://www.runoob.com/try/try.php?filename=trycss_navbar_horizontal_float&basepath=0        */
+}
+
+.fakeHeight {
+    height: 400px;
+}
+
+#dropnav li {
+    float: left;
+}
+
+#dropnav li a {
+    color: white;
+    padding: 14px 16px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+#dropnav li>a.active {
+    background-color: green;
+}
+
+#dropnav li>a:hover:not(a.active),
+#dropnav .dropbtn:hover {
+    background-color: #555;
+}
+
+#dropnav .dropdown-content {
+    display: none;
+    position: absolute;
+    /* 默认相对于<html>进行绝对定位 */
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
+}
+
+#dropnav .dropdown-content a {
+    color: black;
+    display: block;
+    /* 因为<a>标签不是块元素，min-width:100px不会生效 */
+}
+
+#dropnav .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: deepskyblue;
+}
+
+#dropnav .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.spanbg {
+    background-color: #4CAF50;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    overflow: auto;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    // padding: 12px 16px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropbtn2 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown2 {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown2-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown2-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown2-content a:hover {background-color: #f1f1f1}
+
+.dropdown2:hover .dropdown2-content {
+    display: block;
+}
+
+.dropdown2:hover .dropbtn2 {
+    background-color: #3e8e41;
+}
+
+//drop down end
