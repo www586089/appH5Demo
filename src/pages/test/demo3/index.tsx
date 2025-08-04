@@ -1,5 +1,6 @@
 import { View } from '@tarojs/components'
 import './index.scss'
+import AmountInput from './AmountInput'
 
 interface DragItem {
     id: string
@@ -124,6 +125,9 @@ export default function Index() {
     const listItems = initItems.map((item) => ItemView(item))
 
     return (
+        <>
         <ListView />
+        <AmountInput />
+        </>
     )
 }
