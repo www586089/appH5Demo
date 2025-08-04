@@ -1,0 +1,132 @@
+#para1
+{
+    text-align:center;
+    color:red;
+    font-size: 32px;
+}
+#pId
+{
+    font-size: 18px;
+}
+
+.para2
+{
+    text-align:center;
+    color:red;
+    font-size: 32px;
+}
+
+.chp-head {
+    font-size: 32px;
+    color: #ff0000;
+    text-align: start;
+}
+
+//多个选择器一起使用
+.center {
+	text-align:center;
+    font-size: 32px;
+}
+.color {
+	color:#ff0000;
+}
+
+#customers
+{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	
+    display: block;//设置了这个才看到margin padding生效 ？
+	border-collapse:collapse;
+    padding: 24px 16px; //上下/左右
+    margin: 24px 16px;//上下/左右
+}
+#customers td, #customers th 
+{
+	font-size:0.5em;
+	border:1px solid #98bf21;
+	padding:3px 7px 2px 7px;
+}
+#customers th 
+{
+	font-size:1em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#A7C942;
+	color:#ffffff;
+}
+#customers tr.alt td 
+{
+	color:#000000;
+	background-color:#EAF2D3;
+}
+
+p.none {border-style:none;}
+p.dotted {border-style:dotted;}
+p.dashed {border-style:dashed;}
+p.solid {border-style:solid;}
+p.double {border-style:double;}
+p.groove {border-style:groove;}
+p.ridge {border-style:ridge;}
+p.inset {border-style:inset;}
+p.outset {border-style:outset;}
+p.hidden {border-style:hidden;}
+p.mix {border-style: dotted dashed solid double;}
+
+.desc {
+    font-size: 32px;
+    font-weight: 400;
+    font-style: normal;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: aquamarine;
+    margin: 24px 16px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+
+button {
+  background: none;
+  text-decoration: inherit;
+  font-family: system-ui;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+}
+
+.border-gradient {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+}
+.border-gradient-purple {
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+}
+.border-gradient-green {
+  border-image-source: linear-gradient(to left, #00c853, #b2ff59);
+}
+
+.only-top {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.border-container {
+  > div {
+    width: 50%;
+    text-align:center;
+  }
+  > div > div {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+.on-dark {
+  background: #cf4a4a;
+  height: 92px;
+  justify-content: center;
+  button {
+    color: white;
+  }
+}
