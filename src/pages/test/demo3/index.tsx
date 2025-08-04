@@ -1,16 +1,14 @@
 import { View } from '@tarojs/components'
-<<<<<<< HEAD
+
 import './index.scss'
 import AmountInput from './AmountInput'
-=======
+
 // import { Sortable } from 'react-sortablejs';
->>>>>>> 688ab9752913b0340d57b9b9a225824c33d4c6a2
+
 
 // import { SortableContainer } from 'react-sortable-hoc';
 import { useEffect, useRef, useState } from 'react';
 // import Sortable from 'sortablejs';
-
-import './index.scss'
 import SortableView from './SortableView';
 import SortableViewV2 from './SortableViewV2';
 import PagePicker from './ActionSheet';
@@ -190,8 +188,8 @@ export default function Index() {
     function ItemView(item) {
         return (
             <li draggable='true'
-              id={item.id}
-              key={item.id}
+                id={item.id}
+                key={item.id}
             >{item.desc}</li>
         )
     }
@@ -253,7 +251,7 @@ export default function Index() {
 
         if (ms) {
             var currentRect = target.getBoundingClientRect();
-           //nodeType 属性返回以数字值返回指定节点的节点类型。1=元素节点  2=属性节点
+            //nodeType 属性返回以数字值返回指定节点的节点类型。1=元素节点  2=属性节点
             if (prevRect.nodeType === 1) {
                 prevRect = prevRect.getBoundingClientRect();
             }
@@ -273,7 +271,7 @@ export default function Index() {
             _css(target, 'transform', 'translate3d(0,0,0)');
 
             clearTimeout(target.animated);
-            target.animated = setTimeout(function() {
+            target.animated = setTimeout(function () {
                 _css(target, 'transition', '');
                 _css(target, 'transform', '');
                 target.animated = false;
@@ -306,8 +304,8 @@ export default function Index() {
     function ListView() {
         return <View>
             <ul className='container'
-              onDragStart={ulDragStart}
-              onDragOver={ulDragOver}
+                onDragStart={ulDragStart}
+                onDragOver={ulDragOver}
             >{listItems}</ul>
         </View>
     }
@@ -315,20 +313,10 @@ export default function Index() {
     const listItems = initItems.map((item) => ItemView(item))
 
     return (
-<<<<<<< HEAD
         <>
-        <ListView />
-        <AmountInput />
-        </>
-=======
-        <View>
-            {/* <ListView /> */}
-            {/* <SortableViewV2 /> */}
-            {/* <XXView /> */}
+            <ListView />
+            <AmountInput />
             <PagePicker />
-            
-        </View>
-
->>>>>>> 688ab9752913b0340d57b9b9a225824c33d4c6a2
+        </>
     )
 }
