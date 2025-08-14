@@ -335,6 +335,144 @@ export default function Index2() {
             </>
         )
     }
+
+    function ToolTipsView() {
+        return (
+            <>
+                <div className='chp'>
+                    3.6 工具提示
+                </div>
+
+                <div className='tooltip'>1 鼠标移动到这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+                <h2>2 右侧提示工具</h2>
+                <p>鼠标移动到以下元素:</p>
+
+                <div className='tooltip2'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+                <h2>3 左侧提示工具</h2>
+                <p>鼠标移动到以下元素:</p>
+
+                <div className='tooltip3'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+                <h2>4 头部提示工具</h2>
+                <p>鼠标移动到以下元素:</p>
+
+                <div className='tooltip4'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+                <h2>5 底部提示工具</h2>
+                <p>鼠标移动到以下元素:</p>
+
+                <div className='tooltip5'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+                <h2>6 顶部提示框/底部箭头</h2>
+
+                <div className='tooltip6'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+
+                <h2>7 底部提示框/顶部箭头</h2>
+
+                <div className='tooltip7'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+
+                <h2>8 右侧提示框/左侧箭头</h2>
+
+                <div className='tooltip8'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+
+                <h2>9 左侧提示框/右侧箭头</h2>
+                <div className='tooltip9'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+
+                <h2>10 提示工具淡入效果</h2>
+                <p>鼠标移动到以下元素，提示工具会再一秒内从 0% 到 100% 完全显示。</p>
+
+                <div className='tooltip10'>鼠标移动到我这
+                    <span className='tooltiptext'>提示文本</span>
+                </div>
+
+
+                <h2>11 漂亮的提示框</h2>
+                <div className='wrapper'>
+                    I have a tooltip.
+                    <div className='tooltip'>I am a tooltip!</div>
+                </div>
+            </>
+        )
+    }
+
+
+    function GalleryView() {
+        return (
+            <>
+                <h2 style={{textAlign:'center'}}>3.7 响应式图片相册</h2>
+
+                <div className='responsive'>
+                    <div className='img'>
+                        <a target='_blank' href='img_fjords.jpg'>
+                            <img src='https://www.runoob.com/wp-content/uploads/2016/04/img_fjords.jpg' alt='Trolltunga Norway' width='300' height='200' />
+                        </a>
+                        <div className='desc'>Add a description of the image here</div>
+                    </div>
+                </div>
+
+
+                <div className='responsive'>
+                    <div className='img'>
+                        <a target='_blank' href='img_forest.jpg'>
+                            <img src='https://www.runoob.com/wp-content/uploads/2016/04/img_forest.jpg' alt='Forest' width='600' height='400' />
+                        </a>
+                        <div className='desc'>Add a description of the image here</div>
+                    </div>
+                </div>
+
+                <div className='responsive'>
+                    <div className='img'>
+                        <a target='_blank' href='img_lights.jpg'>
+                            <img src='https://www.runoob.com/wp-content/uploads/2016/04/img_lights.jpg' alt='Northern Lights' width='600' height='400' />
+                        </a>
+                        <div className='desc'>Add a description of the image here</div>
+                    </div>
+                </div>
+
+                <div className='responsive'>
+                    <div className='img'>
+                        <a target='_blank' href='img_mountains.jpg'>
+                            <img src='https://www.runoob.com/wp-content/uploads/2016/04/img_mountains.jpg' alt='Mountains' width='600' height='400' />
+                        </a>
+                        <div className='desc'>Add a description of the image here</div>
+                    </div>
+                </div>
+
+                <div className='clearfix'></div>
+
+                <div style={{padding: '6px'}}>
+
+                    <h4>重置浏览器大小查看效果</h4>
+                </div>
+
+            </>
+        )
+    }
+
     return (
         <>
             <CssPClassView />
@@ -345,6 +483,8 @@ export default function Index2() {
             <NavFloatView />
             <SideNavView />
             <DropDownNavView />
+            <ToolTipsView />
+            <GalleryView />
         </>
     )
 }
