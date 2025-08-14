@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>浮动标签</title>
+    <meta charset="utf-8" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: deeppink;
+            /* width: 600px;
+            height: 600px; */
+            
+            /* overflow: hidden; */
+            float: right;
+
+        
+        }
+        .container :last-child {
+            width: 400px;
+            height: 400px;
+            background-color: rgb(51, 79, 79);
+            float: right;
+            /* clear: both; */
+        
+        }
+
+        .container :first-child {
+            background-color: rgb(33, 168, 94);
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+        .container :nth-child(2) {
+            background-color: rgb(18, 47, 72);
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+
+        .container :nth-child(3) {
+            background-color: rgb(103, 80, 50);
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+
+        
+
+        /* .child1 {
+            background-color: rgb(33, 168, 94);
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+
+        .child2 {
+            background-color: rgb(18, 47, 72);
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+
+        .child3 {
+            background-color: rgb(103, 80, 50);
+            width: 200px;
+            height: 200px;
+            float: right;
+        } */
+
+
+        span {
+            background-color: blueviolet;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="child1"></div>
+        <div class="child2"></div>
+        <div class="child3"></div>
+        <div class="child3"></div>
+    </div>
+    <!-- <span>天河白云山水</span> -->
+</body>
+
+</html>

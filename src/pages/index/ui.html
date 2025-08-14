@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>学习中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #F3F0F8;
+            height: 2000px;
+        }
+
+        #header {
+            width: 100%;
+            height: 40px;
+            /* border: 1px solid #ccc; */
+            border-bottom: 1px solid #ccc;
+        }
+
+        .header {
+            width: 600px;
+            height: 40px;
+            border: 1px solid red;
+            margin: 0px auto;
+        }
+
+        .header_left {
+            width: 200px;
+            height: 40px;
+            border: 1px solid green;
+
+            >:first-child {
+                float: left;
+                border: 1px solid;
+                margin-top: 8px;
+            }
+            .child {
+                background-color: #2cc44d;
+                .pro {
+                    background-color: #946666;
+                }
+
+                .pro:hover .top_nav {
+
+                }
+                .top_nav {
+                    background-color: blueviolet;
+                    float: right;
+                    list-style: none;
+                }
+            }
+
+            /* >:nth-child(2) {
+                display: block;
+                list-style: none;
+                border: 2px solid green;
+                float: right;
+
+                :last-child {
+                    list-style: none;
+                    border: 2px solid rgb(145, 9, 36);
+                    :hover {
+                        display: block;
+                    }
+                }
+
+                :last-child>:hover {
+                    background-color: #495d4d;
+                }
+            } */
+
+            /* >:nth-child(2) ul:hover {
+                display: block;
+                list-style: none;
+                border: 2px solid green;
+                background-color: #495d4d;
+            } */
+        }
+
+        .header_right {
+            width: 200px;
+            height: 40px;
+            border: 1px solid #946666;
+            float: right;
+        }
+
+        #logo {
+            width: 500px;
+            height: 120px;
+            border: 1px solid red;
+            margin: 10px auto;
+        }
+
+        .logo_left {
+            width: 40px;
+            height: 40px;
+            border: 1px solid green;
+            float: left;
+        }
+
+        .logo_right {
+            width: 40px;
+            height: 40px;
+            border: 1px solid green;
+            float: right;
+        }
+
+
+        #nav {
+            width: 500px;
+            height: 45px;
+            border: 1px solid red;
+            margin: 10px auto;
+        }
+
+        .nav_left {
+            width: 40px;
+            height: 40px;
+            border: 1px solid green;
+            float: left;
+        }
+
+        .nav_center {
+            width: 200px;
+            height: 40px;
+            border: 1px solid green;
+            margin: 0 auto;
+            float: left;
+        }
+
+        .nav_right {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgb(13, 223, 13);
+            float: right;
+        }
+
+        #banner {
+            width: 100%;
+            height: 400px;
+            background-color: #f5b6b6;
+            border: 1px solid aqua;
+            position: relative;
+        }
+
+        .banner {
+
+            img {
+                width: 100%;
+                height: 300px;
+                border: 1px solid gray;
+            }
+        }
+
+        .p_content {
+            width: 600px;
+            height: 200px;
+            background-color: #ccc;
+            border: 1px solid rgb(146, 31, 31);
+            position: absolute;
+            /* margin: 0 auto; */
+            top: 0px;
+            left: calc(50% - 600px / 2);
+        }
+
+
+        .banner_nav {
+            width: 50px;
+            height: 200px;
+            border: 1px solid rgb(182, 119, 119);
+            float: left;
+        }
+
+        .banner_right {
+            width: 540px;
+            height: 200px;
+            border: 1px solid rgb(0, 4, 255);
+            float: right;
+        }
+
+        .banner_login {
+            width: 20px;
+            height: 20px;
+            border: 1px solid green;
+        }
+
+        .banner_bottom {
+            width: 20px;
+            height: 20px;
+            border: 1px solid green;
+        }
+
+        #sidebar {
+            width: 80px;
+            height: 300px;
+            background-color: #758478;
+            border-radius: 10px 0px 0px 10px;
+            border: 1px solid #2cc44d;
+            position: fixed;
+            right: 0px;
+            top: calc(50% - 300px / 2);
+        }
+
+        #content {
+            width: 100%;
+            height: 620px;
+            background-color: #f4f4f4;
+            padding: 40px 0px;
+        }
+
+        .content {
+            width: 600px;
+            height: 620px;
+            background-color: #a56262;
+            margin: 0 auto;
+        }
+
+        .content_top {
+            width: 600px;
+            height: 80px;
+            border-bottom: 1px solid red;
+
+            :first-child {
+                width: 180px;
+                height: 80px;
+                border: 1px solid blue;
+                float: left;
+            }
+        }
+
+        .content_top :nth-child(2) {
+            width: 180px;
+            height: 80px;
+            border: 1px solid rgb(81, 81, 100);
+            float: left;
+        }
+
+
+        .content_top :nth-child(3) {
+            width: 180px;
+            height: 80px;
+            border: 1px solid rgb(81, 81, 100);
+            float: right;
+        }
+
+        .content_bottom {
+            width: 600px;
+            height: 500px;
+            border: 1px solid rgb(180, 10, 38);
+
+            .content_bottom_left {
+                width: 150px;
+                height: 500px;
+                border: 1px solid rgb(73, 42, 135);
+                float: left;
+            }
+
+            .content_bottom_right {
+                width: 440px;
+                height: 500px;
+                border: 1px solid rgb(73, 42, 135);
+                float: right;
+
+                /* :last-child {
+                    margin-top: 10px;
+                } */
+            }
+
+            .content_bottom_right>div {
+                width: 440px;
+                height: 250px;
+                border: 1px solid rgb(184, 169, 31);
+
+
+            }
+
+            .content_bottom_right>div>div {
+                width: 100px;
+                height: 238px;
+                margin-left: 8px;
+                border: 1px solid #000;
+                float: left;
+
+
+                /* div {
+                    width: 100px;
+                    height: 165px;
+                    border: 1px solid white;
+                    background-color: rebeccapurple;
+                    float: left;
+                } */
+            }
+        }
+
+        #footer {
+            width: 100%;
+            height: 305px;
+            background-color: #fff;
+        }
+
+        #footer {
+            width: 600px;
+            height: 305px;
+            margin: 0px auto;
+            border: 1px solid darkgoldenrod;
+
+            .footer_top {
+                height: 270px;
+                border: 1px solid pink;
+
+                .footer_top_left {
+                    width: 200px;
+                    border: 1px solid darkblue;
+                    height: 100%;
+                    float: left;
+                    position: relative;
+                }
+
+                .footer_top_center {
+                    width: 240px;
+                    border: 1px solid rgb(144, 102, 65);
+                    height: 100%;
+                    float: left;
+                    margin: 0 auto;
+
+                    div {
+                        h6 {
+                            font-size: 14px;
+                            margin-bottom: 10px;
+                        }
+
+                        li {
+                            list-style: none;
+                            text-decoration: none;
+                            font-size: 10px;
+                            padding-left: 10px;
+                            padding-top: 3px;
+                        }
+
+                        margin-right: 20px;
+                        float: right;
+                        margin-top: 50px;
+                    }
+                }
+
+                .footer_top_right {
+                    width: 140px;
+                    border: 1px solid rgb(19, 232, 69);
+                    height: 100%;
+                    float: right;
+                }
+            }
+
+            .footer_bottom {
+                height: 33px;
+                border: 1px solid rgb(10, 212, 34);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部标签 begin-->
+    <div id="header">
+        <div class="header">
+            <div class="header_left">
+                <div>IT<span>精品学习网</span></div>
+                <div class="child">
+                    <a href="" class="pro">
+                        <img src="./media/taobao.png" style="width: 18px;" />
+                        <i>核心产品</i>
+                    </a>
+                    <div class="top_nav" style="border: 1px solid paleturquoise;">
+                        <ul>
+                            <li>广州</li>
+                            <li>贵州</li>
+                            <li>云南</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="header_right">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 顶部标签 end-->
+
+    <!-- Logo标签 begin-->
+    <div id="logo">
+        <div class="logo_left"></div>
+        <div class="logo_right"></div>
+    </div>
+
+    <!-- Logo标签 end-->
+
+
+    <!-- nav标签 begin-->
+    <div id="nav">
+        <div class="nav_left"></div>
+        <div class="nav_center"></div>
+        <div class="nav_right"></div>
+    </div>
+
+    <!-- nav标签 end-->
+
+    <!-- banner标签 begin-->
+    <div id="banner">
+        <div class="banner">
+            <img src="./media/cash_head_bg.png" alt="" />
+        </div>
+        <div class="p_content">
+            <div class="banner_nav"></div>
+            <div class="banner_right">
+                <div class="banner_login"></div>
+                <div class="banner_bottom"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- banner标签 end-->
+
+    <div id="sidebar">
+
+    </div>
+
+    <!-- 内容区域标签 end-->
+    <div id="content">
+        <div class="content">
+            <div class="content_top">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="content_bottom">
+                <div class="content_bottom_left"></div>
+                <div class="content_bottom_right">
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 内容区域标签 end-->
+
+    <div id="footer">
+        <div class="footer_top">
+            <div class="footer_top_left">
+                <p
+                    style="word-break: break-all;text-indent: 2em; font-size: 12px;background-color: #2cc44d; border: 1px solid red; margin-top: 40px;color: #333;">
+                    未连接到互联网
+                    请试试以下办法：
+
+                    检查网线、调制解调器和路由器
+                    重新连接到 Wi-Fi 网络
+                    运行 Windows 网络诊断
+                    ERR_INTERNET_DISCONNECTED
+                </p>
+            </div>
+            <div class="footer_top_center">
+                <div>
+                    <h6>关于我们</h6>
+                    <ul>
+                        <li><a href="">挑选课程</a></li>
+                        <li><a href="">购买课程</a></li>
+                        <li><a href="">学习课程</a></li>
+                        <li><a href="">配套资源</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6>新手指南</h6>
+                    <ul>
+                        <li><a href="">挑选课程</a></li>
+                        <li><a href="">购买课程</a></li>
+                        <li><a href="">学习课程</a></li>
+                        <li><a href="">配套资源</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6>新手指南</h6>
+                    <ul>
+                        <li><a href="">挑选课程</a></li>
+                        <li><a href="">购买课程</a></li>
+                        <li><a href="">学习课程</a></li>
+                        <li><a href="">配套资源</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer_top_right"></div>
+        </div>
+
+        <div class="footer_bottom"></div>
+    </div>
+</body>
+
+</html>

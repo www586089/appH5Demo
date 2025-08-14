@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+        }
+
+        #box1 {
+            background: red;
+        }
+
+        #box2 {
+            width: 200px;
+            height: 500px;
+            background: green;
+            position: relative;
+            padding-left: 20px;
+            padding-top: 20px;
+
+            #father {
+                width: 200px;
+                height: 200px;
+                background: rgb(19, 55, 86);
+                /* position: relative; */
+                /* position: fixed; */
+                /* margin-left: 20px; */
+                /* margin-top: 20px; */
+                border: 1px solid khaki;
+
+                #son {
+                    width: 100px;
+                    height: 100px;
+                    background: darkblue;
+                    position: absolute;
+                    /* top: 10px; */
+                    left: 10px;
+                    top: 100px;
+                    /* left: 100px; */
+                }
+            }
+        }
+
+        #box3 {
+            background: blue;
+        }
+
+        #box {
+            width: 50px;
+            height: 200px;
+            background: #160a5b;
+            position: fixed;
+            right: 0;
+            margin-top: 100px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="box1"></div>
+    <div id="box2">
+        <div id="father">
+            <div id="son"></div>
+        </div>
+    </div> -->
+    <div id="box3"></div>
+    <div id="box"></div>
+</body>
+
+</html>
