@@ -1,5 +1,7 @@
 
 import './index2.scss'
+import klematis_small from '../../media/klematis_small.jpg'
+import klematis2_small from '../../media/klematis2_small.jpg'
 
 export default function Index2() {
 
@@ -423,7 +425,7 @@ export default function Index2() {
     function GalleryView() {
         return (
             <>
-                <h2 style={{textAlign:'center'}}>3.7 响应式图片相册</h2>
+                <h2 style={{ textAlign: 'center' }}>3.7 响应式图片相册</h2>
 
                 <div className='responsive'>
                     <div className='img'>
@@ -464,13 +466,59 @@ export default function Index2() {
 
                 <div className='clearfix'></div>
 
-                <div style={{padding: '6px'}}>
+                <div style={{ padding: '6px' }}>
 
                     <h4>重置浏览器大小查看效果</h4>
                 </div>
 
             </>
         )
+    }
+
+    function OpacityImageView() {
+        return (
+            <>
+                <h2>3.8 图片透明度</h2>
+
+                <h1>图片透明度</h1>
+                <p>opacity 属性通常与 :hover 选择器一起使用，在鼠标移动到图片上后改变图片的透明度：</p>
+                <img className='opacity--image' src={klematis_small} width='150' height='113' alt='klematis' />
+                <img className='opacity--image' src={klematis2_small} width='150' height='113' alt='klematis' />
+
+                <p><b>注意:</b>在 IE 中必须声明 &lt;!DOCTYPE&gt; 才能保证 :hover 选择器能够有效。</p>
+
+            </>
+        )
+
+    }
+
+    function ComposeImageView() {
+        return (
+            <>
+                <h2>3.9 图片组合</h2>
+
+                <ul id='navlist'>
+                    <li id='home'><a href='/'></a></li>
+                    <li id='prev'><a href='/css/'></a></li>
+                    <li id='next'><a href='/css/'></a></li>
+                </ul>
+
+                <div className='desc' style={{ marginTop: '50px', display: 'block' }}>
+
+                    <p style={{ textAlign: 'start' }}>{'1. #navlist{position:relative;} - 位置设置相对定位，让里面的绝对定位'}</p>
+                    <p>{'2. #navlist li{margin:0;padding:0;list-style:none;position:absolute;top:0;} - margin和padding设置为0，列表样式被删除，所有列表项是绝对定位'}</p>
+                    <p>{'3. #navlist li, #navlist a{height:44px;display:block;} - 所有图像的高度是44px'}</p>
+
+                </div>
+
+                <ul id='navlist2'>
+                    <li id='home2'><a href='default.asp'></a></li>
+                    <li id='prev2'><a href='css_intro.asp'></a></li>
+                    <li id='next2'><a href='css_syntax.asp'></a></li>
+                </ul>
+            </>
+        )
+
     }
 
     return (
@@ -485,6 +533,9 @@ export default function Index2() {
             <DropDownNavView />
             <ToolTipsView />
             <GalleryView />
+            <OpacityImageView />
+            <ComposeImageView />
+
         </>
     )
 }
