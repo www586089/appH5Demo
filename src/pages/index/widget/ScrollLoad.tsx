@@ -1,5 +1,5 @@
 import { View, ScrollView } from '@tarojs/components';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import './index.scss';
 
 interface ScrollLoadProps {
@@ -32,17 +32,14 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
   const REFRESH_LIMIT = 70;
-  const SHOW_TIP_DISTANCE = 25; // 下拉超过25px才显示文案
+  const SHOW_TIP_DISTANCE = 25;
 
-  // 格式化时间
+  // 时间格式化
   const formatTime = (date: Date) => {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
     const h = String(date.getHours()).padStart(2, '0');
-    const mi = String(date.getMinutes()).padStart(2, '0');
+    const m = String(date.getMinutes()).padStart(2, '0');
     const s = String(date.getSeconds()).padStart(2, '0');
-    return `${y}-${m}-${d} ${h}:${mi}:${s}`;
+    return `${h}:${m}:${s}`;
   };
 
   // 触摸开始
@@ -53,7 +50,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     isPulling.current = true;
   };
 
-  // 触摸移动（丝滑）
+  // 触摸移动
   const onTouchMove = (e) => {
     if (!isPulling.current || refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
@@ -88,8 +85,8 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       try {
         await onRefresh();
         setStatus('success');
-        setLastRefreshTime(formatTime(new Date()));
         await new Promise((r) => setTimeout(r, 200));
+        setLastRefreshTime(formatTime(new Date()));
       } finally {
         setPullDown(0);
         setStatus('normal');
@@ -100,51 +97,47 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     }
   };
 
-  // 渲染内容
-  const renderRefreshContent = () => {
-    if (pullDown < SHOW_TIP_DISTANCE && status !== 'refreshing' && status !== 'success') {
-      return null;
-    }
+  // 下拉过程中显示的内容
+  const renderPullContent = () => {
+    // 不到距离不显示提示文字
+    if (pullDown < SHOW_TIP_DISTANCE) return null;
 
     if (status === 'refreshing') {
       return (
-        <View className="refresh-box">
+        <View className="refresh-row">
           <View className="loading-spin" />
           <View className="tip-text">正在刷新...</View>
         </View>
       );
     }
+
     if (status === 'success') {
       return (
-        <View className="refresh-box">
+        <View className="refresh-row">
           <View className="tip-text success">刷新成功</View>
         </View>
       );
     }
-    if (status === 'loosen') {
-      return (
-        <View className="refresh-box">
-          <View className="tip-text">释放立即刷新</View>
+
+    return (
+      <View className="refresh-row">
+        <View className="tip-text">
+          {status === 'loosen' ? '释放立即刷新' : '下拉刷新'}
         </View>
-      );
-    }
-    if (status === 'pull') {
-      return (
-        <View className="refresh-box">
-          <View className="tip-text">下拉刷新</View>
-        </View>
-      );
-    }
-    return null;
+      </View>
+    );
   };
 
   return (
     <View className="pull-scroll-box">
       <View className="refresh-header" style={{ height: `${pullDown}px` }}>
-        {renderRefreshContent()}
-        {lastRefreshTime && status === 'normal' && pullDown === 0 && (
-          <View className="last-time">最近更新: {lastRefreshTime}</View>
+        {/* 下拉过程中 → 始终显示上次刷新时间 */}
+        {lastRefreshTime && (
+          <View className="last-time-tip">上次刷新：{lastRefreshTime}</View>
         )}
+
+        {/* 下拉超过距离才显示：下拉刷新 / 释放刷新 */}
+        {renderPullContent()}
       </View>
 
       <ScrollView
