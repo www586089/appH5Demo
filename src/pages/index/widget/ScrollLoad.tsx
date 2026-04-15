@@ -1,5 +1,5 @@
 import { View, ScrollView } from '@tarojs/components';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import './index.scss';
 
 interface ScrollLoadProps {
@@ -28,20 +28,32 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const isPulling = useRef(false);
 
   const [pullDown, setPullDown] = useState(0);
-  const [status, setStatus] = useState<'normal' | 'pull' | 'loosen' | 'loading'>('normal');
+  const [status, setStatus] = useState<'normal' | 'pull' | 'loosen' | 'refreshing' | 'success'>('normal');
+  const [lastRefreshTime, setLastRefreshTime] = useState('');
 
   const REFRESH_LIMIT = 70;
+  const SHOW_TIP_DISTANCE = 25; // 下拉超过25px才显示文案
+
+  // 格式化时间
+  const formatTime = (date: Date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    const h = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const s = String(date.getSeconds()).padStart(2, '0');
+    return `${y}-${m}-${d} ${h}:${mi}:${s}`;
+  };
 
   // 触摸开始
   const onTouchStart = (e) => {
     if (refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
-
     startY.current = e.touches[0].pageY;
     isPulling.current = true;
   };
 
-  // 触摸移动（丝滑核心）
+  // 触摸移动（丝滑）
   const onTouchMove = (e) => {
     if (!isPulling.current || refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
@@ -53,11 +65,9 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       return;
     }
 
-    // 超丝滑阻尼系数
     const d = Math.pow(dy, 0.92);
     const maxPull = REFRESH_LIMIT * 1.6;
     const pull = Math.min(d, maxPull);
-
     setPullDown(pull);
 
     if (pull < REFRESH_LIMIT) {
@@ -67,42 +77,76 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     }
   };
 
-  // 触摸结束（自动回弹）
+  // 触摸结束
   const onTouchEnd = async () => {
     if (!isPulling.current) return;
     isPulling.current = false;
 
     if (pullDown >= REFRESH_LIMIT && !refreshing) {
-      setStatus('loading');
+      setStatus('refreshing');
       setPullDown(REFRESH_LIMIT);
       try {
         await onRefresh();
+        setStatus('success');
+        setLastRefreshTime(formatTime(new Date()));
+        await new Promise((r) => setTimeout(r, 200));
       } finally {
         setPullDown(0);
         setStatus('normal');
       }
     } else {
-      // 平滑回弹
       setPullDown(0);
       setStatus('normal');
     }
   };
 
-  const getTip = () => {
-    if (status === 'pull') return '下拉刷新';
-    if (status === 'loosen') return '释放立即刷新';
-    if (status === 'loading') return '正在刷新...';
-    return '';
+  // 渲染内容
+  const renderRefreshContent = () => {
+    if (pullDown < SHOW_TIP_DISTANCE && status !== 'refreshing' && status !== 'success') {
+      return null;
+    }
+
+    if (status === 'refreshing') {
+      return (
+        <View className="refresh-box">
+          <View className="loading-spin" />
+          <View className="tip-text">正在刷新...</View>
+        </View>
+      );
+    }
+    if (status === 'success') {
+      return (
+        <View className="refresh-box">
+          <View className="tip-text success">刷新成功</View>
+        </View>
+      );
+    }
+    if (status === 'loosen') {
+      return (
+        <View className="refresh-box">
+          <View className="tip-text">释放立即刷新</View>
+        </View>
+      );
+    }
+    if (status === 'pull') {
+      return (
+        <View className="refresh-box">
+          <View className="tip-text">下拉刷新</View>
+        </View>
+      );
+    }
+    return null;
   };
 
   return (
     <View className="pull-scroll-box">
-      {/* 下拉刷新区域 */}
       <View className="refresh-header" style={{ height: `${pullDown}px` }}>
-        <View className="refresh-tip">{getTip()}</View>
+        {renderRefreshContent()}
+        {lastRefreshTime && status === 'normal' && pullDown === 0 && (
+          <View className="last-time">最近更新: {lastRefreshTime}</View>
+        )}
       </View>
 
-      {/* 丝滑滚动容器 */}
       <ScrollView
         ref={scrollRef}
         className="scroll-view"
@@ -114,13 +158,10 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         onScrollToLower={() => {
-          if (!loading && !finished && !refreshing) {
-            onLoadMore();
-          }
+          if (!loading && !finished && !refreshing) onLoadMore();
         }}
       >
         {children}
-
         <View className="load-more">
           {loading && <View>加载中...</View>}
           {finished && !loading && <View>—— 已加载完毕 ——</View>}
