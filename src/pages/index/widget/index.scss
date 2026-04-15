@@ -5,16 +5,26 @@
   overflow: hidden;
 }
 
-/* 下拉容器：高度随拉动变化 */
 .refresh-header {
   width: 100%;
   position: relative;
   background: #f5f7fa;
   transition: height 0.2s ease-out;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
 }
 
-/* 核心：内容绝对定位，慢慢拉出来 */
+/* 上次刷新时间 - 下拉全程显示 */
+.time-row {
+  font-size: 14rpx;
+  color: #999;
+  line-height: 1.2;
+}
+
 .refresh-content {
   position: absolute;
   left: 0;
@@ -28,8 +38,7 @@
 .refresh-row {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  padding: 10rpx 0;
+  gap: 10rpx;
 }
 
 .tip-text {
@@ -38,11 +47,6 @@
 }
 .tip-text.success {
   color: #07c160;
-}
-
-.time-text {
-  font-size: 14rpx;
-  color: #999;
 }
 
 .loading-spin {

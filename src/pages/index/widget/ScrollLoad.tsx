@@ -31,10 +31,10 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const [status, setStatus] = useState<'normal' | 'pull' | 'loosen' | 'refreshing' | 'success'>('normal');
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
-  // 核心配置
   const REFRESH_LIMIT = 70;
-  const START_SHOW = 30; // 下拉超过30px才开始露出提示
+  const START_SHOW_TIP = 30;
 
+  // 时间格式化
   const formatTime = (date: Date) => {
     const h = String(date.getHours()).padStart(2, '0');
     const m = String(date.getMinutes()).padStart(2, '0');
@@ -97,16 +97,27 @@ export default function ScrollLoad(props: ScrollLoadProps) {
 
   return (
     <View className="pull-scroll-box">
-      {/* 下拉容器 */}
       <View className="refresh-header" style={{ height: `${pullDown}px` }}>
-        {/* 内容区域：只有超过START_SHOW才开始显示 */}
-        <View className="refresh-content" style={{ bottom: `${pullDown >= START_SHOW ? 0 : START_SHOW - pullDown}px` }}>
+        
+        {/* 时间：下拉全程显示 + 加文字“上次刷新” */}
+        {lastRefreshTime && (
+          <View className="time-row">
+            上次刷新：{lastRefreshTime}
+          </View>
+        )}
+
+        {/* 提示文字：下拉到距离才慢慢拉出 */}
+        <View className="refresh-content" style={{ 
+          bottom: `${pullDown >= START_SHOW_TIP ? 0 : START_SHOW_TIP - pullDown}px` 
+        }}>
           <View className="refresh-row">
             {status === 'refreshing' && <View className="loading-spin" />}
-            <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>{getTip()}</View>
-            {lastRefreshTime && <View className="time-text">{lastRefreshTime}</View>}
+            <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>
+              {getTip()}
+            </View>
           </View>
         </View>
+
       </View>
 
       <ScrollView
