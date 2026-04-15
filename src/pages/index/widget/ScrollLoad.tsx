@@ -31,10 +31,10 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const [status, setStatus] = useState<'normal' | 'pull' | 'loosen' | 'refreshing' | 'success'>('normal');
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
+  // 核心配置
   const REFRESH_LIMIT = 70;
-  const SHOW_TIP_DISTANCE = 25;
+  const START_SHOW = 30; // 下拉超过30px才开始露出提示
 
-  // 时间格式化
   const formatTime = (date: Date) => {
     const h = String(date.getHours()).padStart(2, '0');
     const m = String(date.getMinutes()).padStart(2, '0');
@@ -42,7 +42,6 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     return `${h}:${m}:${s}`;
   };
 
-  // 触摸开始
   const onTouchStart = (e) => {
     if (refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
@@ -50,7 +49,6 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     isPulling.current = true;
   };
 
-  // 触摸移动
   const onTouchMove = (e) => {
     if (!isPulling.current || refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
@@ -62,19 +60,11 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       return;
     }
 
-    const d = Math.pow(dy, 0.92);
-    const maxPull = REFRESH_LIMIT * 1.6;
-    const pull = Math.min(d, maxPull);
+    const pull = Math.min(Math.pow(dy, 0.92), REFRESH_LIMIT * 1.6);
     setPullDown(pull);
-
-    if (pull < REFRESH_LIMIT) {
-      setStatus('pull');
-    } else {
-      setStatus('loosen');
-    }
+    setStatus(pull < REFRESH_LIMIT ? 'pull' : 'loosen');
   };
 
-  // 触摸结束
   const onTouchEnd = async () => {
     if (!isPulling.current) return;
     isPulling.current = false;
@@ -85,7 +75,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       try {
         await onRefresh();
         setStatus('success');
-        await new Promise((r) => setTimeout(r, 200));
+        await new Promise((r) => setTimeout(r, 800));
         setLastRefreshTime(formatTime(new Date()));
       } finally {
         setPullDown(0);
@@ -97,47 +87,26 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     }
   };
 
-  // 下拉过程中显示的内容
-  const renderPullContent = () => {
-    // 不到距离不显示提示文字
-    if (pullDown < SHOW_TIP_DISTANCE) return null;
-
-    if (status === 'refreshing') {
-      return (
-        <View className="refresh-row">
-          <View className="loading-spin" />
-          <View className="tip-text">正在刷新...</View>
-        </View>
-      );
-    }
-
-    if (status === 'success') {
-      return (
-        <View className="refresh-row">
-          <View className="tip-text success">刷新成功</View>
-        </View>
-      );
-    }
-
-    return (
-      <View className="refresh-row">
-        <View className="tip-text">
-          {status === 'loosen' ? '释放立即刷新' : '下拉刷新'}
-        </View>
-      </View>
-    );
+  const getTip = () => {
+    if (status === 'pull') return '下拉刷新';
+    if (status === 'loosen') return '释放刷新';
+    if (status === 'refreshing') return '正在刷新...';
+    if (status === 'success') return '刷新成功';
+    return '';
   };
 
   return (
     <View className="pull-scroll-box">
+      {/* 下拉容器 */}
       <View className="refresh-header" style={{ height: `${pullDown}px` }}>
-        {/* 下拉过程中 → 始终显示上次刷新时间 */}
-        {lastRefreshTime && (
-          <View className="last-time-tip">上次刷新：{lastRefreshTime}</View>
-        )}
-
-        {/* 下拉超过距离才显示：下拉刷新 / 释放刷新 */}
-        {renderPullContent()}
+        {/* 内容区域：只有超过START_SHOW才开始显示 */}
+        <View className="refresh-content" style={{ bottom: `${pullDown >= START_SHOW ? 0 : START_SHOW - pullDown}px` }}>
+          <View className="refresh-row">
+            {status === 'refreshing' && <View className="loading-spin" />}
+            <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>{getTip()}</View>
+            {lastRefreshTime && <View className="time-text">{lastRefreshTime}</View>}
+          </View>
+        </View>
       </View>
 
       <ScrollView
@@ -146,7 +115,6 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         style={{ height }}
         scrollY
         enhanced
-        bounces={false}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -157,7 +125,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         {children}
         <View className="load-more">
           {loading && <View>加载中...</View>}
-          {finished && !loading && <View>—— 已加载完毕 ——</View>}
+          {finished && <View>—— 已加载完毕 ——</View>}
         </View>
       </ScrollView>
     </View>
