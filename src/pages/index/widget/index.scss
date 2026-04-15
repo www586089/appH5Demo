@@ -9,7 +9,7 @@
   width: 100%;
   position: relative;
   background: #f5f7fa;
-  transition: height 0.2s ease-out;
+  transition: height 0.05s linear; /* 超丝滑过渡 */
   overflow: hidden;
 }
 

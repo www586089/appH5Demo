@@ -31,6 +31,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const [status, setStatus] = useState('normal');
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
+  // 配置
   const REFRESH_LIMIT = 70;
   const START_SHOW = 35;
 
@@ -48,6 +49,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     isPulling.current = true;
   };
 
+  // ========== 核心优化：纯线性跟随手指，无阻尼、不延迟 ==========
   const onTouchMove = (e) => {
     if (!isPulling.current || refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
@@ -59,7 +61,8 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       return;
     }
 
-    const pull = Math.min(Math.pow(dy, 0.92), REFRESH_LIMIT * 1.6);
+    // 纯手指跟随，无任何阻尼计算
+    const pull = Math.min(dy, REFRESH_LIMIT * 1.6);
     setPullDown(pull);
     setStatus(pull < REFRESH_LIMIT ? 'pull' : 'loosen');
   };
@@ -118,7 +121,6 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         onScrollToLower={() => {
-          // ========== 删掉延迟，秒触发 ==========
           if (!loading && !finished && !refreshing) {
             onLoadMore();
           }
