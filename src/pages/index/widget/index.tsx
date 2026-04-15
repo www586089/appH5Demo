@@ -1,109 +1,102 @@
-import { View } from '@tarojs/components';
-import { useEffect, useState } from 'react';
+import { View, Text } from '@tarojs/components';
+import { useState, useEffect } from 'react';
 import ScrollLoad from './ScrollLoad';
+import './test-page.scss';
+
+// 模拟请求
+const fetchData = (page: number, pageSize: number = 20) => {
+  return new Promise<{ list: string[] }>((resolve, reject) => {
+    setTimeout(() => {
+      const list = Array.from({ length: pageSize }).map((_, i) => {
+        return `第 ${page} 页 - 数据 ${i + 1}`;
+      });
+      resolve({ list });
+    }, 1000);
+  });
+};
 
 export default function TestPage() {
-  const [list, setList] = useState<number[]>([]);
+  const [list, setList] = useState<string[]>([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const pageSize = 20;
+  const maxPage = 5;
+
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
-  // 配置：每次20条，总共加载5次 = 100条
-  const PAGE_SIZE = 20;
-  const TOTAL_COUNT = 100;
-
-  // 模拟接口请求
-  const fetchData = (page: number) => {
-    return new Promise<number[]>((resolve) => {
-      setTimeout(() => {
-        const start = (page - 1) * PAGE_SIZE;
-        const data = Array.from({ length: PAGE_SIZE }, (_, i) => start + i + 1);
-        resolve(data);
-      }, 1000);
-    });
-  };
-
-  // 初始化
   useEffect(() => {
-    loadRefresh();
+    refresh();
   }, []);
 
-  // 刷新：重置为第1页
-  const loadRefresh = async () => {
-    const data = await fetchData(1);
-    setList(data);
-    setFinished(data.length >= TOTAL_COUNT);
-  };
-
-  // 下拉刷新
-  const onRefresh = async () => {
+  const refresh = async () => {
+    if (refreshing) return;
     setRefreshing(true);
+    setLoadError(false);
+    setPageNum(1);
+    setRetryCount(0);
+
     try {
-      await loadRefresh();
+      const res = await fetchData(1, pageSize);
+      setList(res.list);
+      setFinished(false);
+    } catch (err) {
+      console.log('刷新失败');
     } finally {
       setRefreshing(false);
     }
   };
 
-  // 上拉加载更多
-  const onLoadMore = async () => {
-    if (loading || finished) return;
+  const loadMore = async () => {
+    if (loading || finished || refreshing) return;
 
+    setLoadError(false);
     setLoading(true);
+
     try {
-      const currentPage = Math.floor(list.length / PAGE_SIZE) + 1;
-      const nextData = await fetchData(currentPage);
-
-      const newList = [...list, ...nextData];
-      setList(newList);
-
-      // 判断是否加载完成（总共100条）
-      if (newList.length >= TOTAL_COUNT) {
+      const nextPage = pageNum + 1;
+      if (nextPage > maxPage) {
         setFinished(true);
+        return;
       }
+
+      // 核心逻辑：第3页第一次失败，重试成功
+      if (nextPage === 3 && retryCount === 0) {
+        setRetryCount(1);
+        throw new Error('加载失败');
+      }
+
+      const res = await fetchData(nextPage, pageSize);
+      setList([...list, ...res.list]);
+      setPageNum(nextPage);
+      setRetryCount(0);
+    } catch (err) {
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={{ width: '100%', height: '100vh', background: '#f5f7fa' }}>
+    <View className='test-page'>
       <ScrollLoad
-        onRefresh={onRefresh}
-        onLoadMore={onLoadMore}
+        height={'100vh'}
+        onRefresh={refresh}
+        onLoadMore={loadMore}
         refreshing={refreshing}
         loading={loading}
         finished={finished}
-        height="100vh"
+        loadError={loadError}
+        onRetryLoad={loadMore}
       >
-        {/* 列表容器 */}
-        <View style={{ padding: '12rpx 24rpx', boxSizing: 'border-box' }}>
-          {list.map((item) => (
-            <View
-              key={item}
-              style={{
-                height: '56px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 32rpx',
-                background: '#fff',
-                borderRadius: '16rpx',
-                marginBottom: '12rpx',
-                boxShadow: '0 2rpx 8rpx rgba(0,0,0,0.05)',
-                fontSize: '28rpx',
-                color: '#333',
-              }}
-              onTouchStart={(e) => {
-                e.currentTarget.style.background = '#f7f8fa';
-              }}
-              onTouchEnd={(e) => {
-                e.currentTarget.style.background = '#fff';
-              }}
-            >
-              列表数据 {item}
-            </View>
-          ))}
-        </View>
+        {list.map((item, index) => (
+          <View key={index} className='test-page__item'>
+            <Text>{item}</Text>
+          </View>
+        ))}
       </ScrollLoad>
     </View>
   );

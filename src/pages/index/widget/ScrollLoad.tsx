@@ -8,6 +8,8 @@ interface ScrollLoadProps {
   refreshing: boolean;
   loading: boolean;
   finished: boolean;
+  loadError?: boolean;
+  onRetryLoad?: () => void;
   height?: string;
   children?: React.ReactNode;
 }
@@ -19,6 +21,8 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     refreshing,
     loading,
     finished,
+    loadError = false,
+    onRetryLoad,
     height = '100vh',
     children,
   } = props;
@@ -31,26 +35,23 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const [status, setStatus] = useState('normal');
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
-  // 配置
   const REFRESH_LIMIT = 70;
-  const START_SHOW = 35;
 
-  const formatTime = (date) => {
+  const formatTime = (date: Date) => {
     const h = String(date.getHours()).padStart(2, '0');
     const m = String(date.getMinutes()).padStart(2, '0');
     const s = String(date.getSeconds()).padStart(2, '0');
     return `${h}:${m}:${s}`;
   };
 
-  const onTouchStart = (e) => {
+  const onTouchStart = (e: any) => {
     if (refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
     startY.current = e.touches[0].pageY;
     isPulling.current = true;
   };
 
-  // ========== 核心优化：纯线性跟随手指，无阻尼、不延迟 ==========
-  const onTouchMove = (e) => {
+  const onTouchMove = (e: any) => {
     if (!isPulling.current || refreshing || loading) return;
     if (scrollRef.current?.scrollTop > 0) return;
 
@@ -61,7 +62,6 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       return;
     }
 
-    // 纯手指跟随，无任何阻尼计算
     const pull = Math.min(dy, REFRESH_LIMIT * 1.6);
     setPullDown(pull);
     setStatus(pull < REFRESH_LIMIT ? 'pull' : 'loosen');
@@ -77,7 +77,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       try {
         await onRefresh();
         setStatus('success');
-        await new Promise((r) => setTimeout(r, 800));
+        await new Promise(r => setTimeout(r, 800));
         setLastRefreshTime(formatTime(new Date()));
       } finally {
         setPullDown(0);
@@ -97,13 +97,20 @@ export default function ScrollLoad(props: ScrollLoadProps) {
     return '';
   };
 
+  const handleRetry = () => {
+    if (loading) return;
+    onRetryLoad?.();
+  };
+
   return (
     <View className="pull-scroll-box">
       <View className="refresh-header" style={{ height: `${pullDown}px` }}>
         <View className="refresh-wrapper">
           <View className="refresh-row">
             {status === 'refreshing' && <View className="loading-spin" />}
-            <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>{getTip()}</View>
+            <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>
+              {getTip()}
+            </View>
             {lastRefreshTime && status !== 'refreshing' && (
               <View className="time-text">上次刷新：{lastRefreshTime}</View>
             )}
@@ -121,7 +128,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         onScrollToLower={() => {
-          if (!loading && !finished && !refreshing) {
+          if (!loading && !finished && !refreshing && !loadError) {
             onLoadMore();
           }
         }}
@@ -129,15 +136,21 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         {children}
 
         <View className="load-more-container">
-          {loading ? (
+          {loading && (
             <View className="load-row">
               <View className="loading-spin" />
               <View className="load-text">加载中...</View>
             </View>
-          ) : finished ? (
+          )}
+
+          {finished && !loading && !loadError && (
             <View className="load-text">—— 已加载完毕 ——</View>
-          ) : (
-            <View className="load-empty" />
+          )}
+
+          {loadError && !loading && (
+            <View className="load-error" onClick={handleRetry}>
+              加载失败，点击重试
+            </View>
           )}
         </View>
       </ScrollView>
