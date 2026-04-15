@@ -8,8 +8,8 @@ export default defineConfig(async (merge, { command, mode }) => {
   const baseConfig: UserConfigExport = {
     projectName: 'appH5Demo',
     date: '2025-5-31',
-    designWidth: 375,
-    deviceRatio: {
+    designWidth: 375,// 设计稿宽度（通常以视觉稿的宽度为准，如375px的iPhone 6/7/8）
+    deviceRatio: {// 不同屏幕宽度对应的缩放比例（用于转换设计稿px）
       640: 2.34 / 2,
       750: 1,
       375: 2,

@@ -1,4 +1,4 @@
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
 import { useLoad } from '@tarojs/taro'
 import './index.scss'
 import DropdownView from '../widget/dropdown/DropdonwView';
@@ -59,28 +59,59 @@ useLoad(() => {
 })
 
 return (
-  <View className='index-page'>
-    <Text className='page-title'>下拉选择框组件示例</Text>
-
-    <View className='demo-section'>
-      <Text className='demo-label'>银行选择 (默认样式):</Text>
-      <DropdownView
-        options={bankOptions}
-        defaultValue='bank3'
-        placeholder='请选择银行'
-        onChange={handleBankChange}
-      />
-    </View>
-
-    <View className='demo-section'>
-      <Text className='demo-label'>省份选择 (自定义颜色):</Text>
-      <DropdownView
-        options={provinceOptions}
-        placeholder='请选择省份'
-        activeColor='#f5222d'
-        maxHeight='30vh'
-      />
+  <View className='container'>
+    <View className='title-container'></View>
+    <View className='body-container'>
+      <ul className='list-container'>
+        <li className='item-container'>Item 1</li>
+        <li className='item-container'>Item 2</li>
+        <li className='item-container'>Item 3</li>
+        <li className='item-container'>Item 4</li>
+        <li className='item-container'>Item 11</li>
+        <li className='item-container'>Item 22</li>
+        <li className='item-container'>Item 33</li>
+        <li className='item-container'>Item 44</li>
+        <li className='item-container'>Item 21</li>
+        <li className='item-container'>Item 22</li>
+        <li className='item-container'>Item 23</li>
+        <li className='item-container'>Item 24</li>
+        <li className='item-container'>Item 25</li>
+        <li className='item-container'>Item 26</li>
+        <li className='item-container'>Item 27</li>
+        <li className='item-container'>Item 28</li>
+        <li className='item-container'>Item 29</li>
+        <li className='item-container'>Item 30</li>
+        <li className='item-container'>Item 31</li>
+        <li className='item-container'>Item 32</li>
+        <li className='item-container'>Item 33</li>
+      </ul>
     </View>
   </View>
-  )
+)
+
+// return (
+//   <View className='index-page'>
+//     <Text className='page-title'>下拉选择框组件示例</Text>
+
+//     <View className='demo-section'>
+//       <Text className='demo-label'>银行选择 (默认样式):</Text>
+//       <DropdownView
+//         options={bankOptions}
+//         defaultValue='bank3'
+//         placeholder='请选择银行'
+//         onChange={handleBankChange}
+//       />
+//     </View>
+
+//     <View className='demo-section'>
+//       <Text className='demo-label'>省份选择 (自定义颜色):</Text>
+//       <DropdownView
+//         options={provinceOptions}
+//         placeholder='请选择省份'
+//         activeColor='#f5222d'
+//         maxHeight='30vh'
+//       />
+//     </View>
+//   </View>
+//   )
 }
