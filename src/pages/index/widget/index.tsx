@@ -1,8 +1,10 @@
-import { View, Text, Button } from '@tarojs/components';
+import { View, Text } from '@tarojs/components';
 import { useState, useEffect } from 'react';
 import ScrollLoad from './ScrollLoad';
+import Dialog from './dialog/Dialog';
 import './test-page.scss';
 
+// 模拟请求
 const fetchData = (page: number, pageSize: number = 20) => {
   return new Promise<{ list: string[] }>((resolve) => {
     setTimeout(() => {
@@ -18,19 +20,23 @@ export default function TestPage() {
   const [list, setList] = useState<string[]>([]);
   const [pageNum, setPageNum] = useState(1);
   const [retryCount, setRetryCount] = useState(0);
-
-  const pageSize = 20;
-  const maxPage = 5;
-
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
   const [loadError, setLoadError] = useState(false);
 
+  // 弹窗
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [currentItem, setCurrentItem] = useState('');
+
+  const pageSize = 20;
+  const maxPage = 5;
+
   useEffect(() => {
     refresh();
   }, []);
 
+  // 下拉刷新
   const refresh = async () => {
     if (refreshing) return;
     setRefreshing(true);
@@ -49,6 +55,7 @@ export default function TestPage() {
     }
   };
 
+  // 上拉加载
   const loadMore = async () => {
     if (loading || finished || refreshing) return;
 
@@ -62,6 +69,7 @@ export default function TestPage() {
         return;
       }
 
+      // 第3页第一次失败，重试成功
       if (nextPage === 3 && retryCount === 0) {
         setRetryCount(1);
         throw new Error('加载失败');
@@ -78,9 +86,10 @@ export default function TestPage() {
     }
   };
 
-  // 按钮点击事件
-  const handleItemBtn = (item, index) => {
-    console.log('点击了按钮：', item, index);
+  // 点击按钮弹出对话框
+  const handleItemBtn = (item: string, index: number) => {
+    setCurrentItem(item);
+    setDialogVisible(true);
   };
 
   return (
@@ -95,6 +104,7 @@ export default function TestPage() {
         loadError={loadError}
         onRetryLoad={loadMore}
       >
+        {/* 你的原有列表 */}
         {list.map((item, index) => (
           <View key={index} className='test-page__item'>
             <Text className='test-page__text'>{item}</Text>
@@ -104,6 +114,39 @@ export default function TestPage() {
           </View>
         ))}
       </ScrollLoad>
+
+      {/* ============================== */}
+      {/* 只改了两个属性名：isOpened + renderContent */}
+      {/* ============================== */}
+      <Dialog
+        isOpened={dialogVisible}
+        title={
+          <View style={{ color: '#0066ff', fontWeight: 'bold' }}>操作提醒</View>
+        }
+        renderContent={
+          <View>
+            <Text>您选择了：</Text>
+            <Text style={{ color: '#ff4000' }}>{currentItem}</Text>
+          </View>
+        }
+        buttons={[
+          {
+            title: '取消',
+            type: 'cancel',
+            callback: () => {
+              setDialogVisible(false);
+            },
+          },
+          {
+            title: '确定',
+            type: 'confirm',
+            callback: () => {
+              console.log('点击确认：', currentItem);
+              setDialogVisible(false);
+            },
+          },
+        ]}
+      />
     </View>
   );
 }
