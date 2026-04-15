@@ -1,0 +1,35 @@
+.pull-scroll-box {
+  width: 100%;
+  background: #f5f7fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.refresh-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+  background: #f5f7fa;
+
+  .refresh-tip {
+    font-size: 26rpx;
+    color: #888;
+    padding: 8rpx 0;
+  }
+}
+
+.scroll-view {
+  width: 100%;
+  background: #fff;
+  position: relative;
+  z-index: 10;
+}
+
+.load-more {
+  padding: 35rpx 0;
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+}
