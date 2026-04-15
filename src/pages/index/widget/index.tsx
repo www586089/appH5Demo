@@ -1,11 +1,10 @@
-import { View, Text } from '@tarojs/components';
+import { View, Text, Button } from '@tarojs/components';
 import { useState, useEffect } from 'react';
 import ScrollLoad from './ScrollLoad';
 import './test-page.scss';
 
-// 模拟请求
 const fetchData = (page: number, pageSize: number = 20) => {
-  return new Promise<{ list: string[] }>((resolve, reject) => {
+  return new Promise<{ list: string[] }>((resolve) => {
     setTimeout(() => {
       const list = Array.from({ length: pageSize }).map((_, i) => {
         return `第 ${page} 页 - 数据 ${i + 1}`;
@@ -63,7 +62,6 @@ export default function TestPage() {
         return;
       }
 
-      // 核心逻辑：第3页第一次失败，重试成功
       if (nextPage === 3 && retryCount === 0) {
         setRetryCount(1);
         throw new Error('加载失败');
@@ -80,6 +78,11 @@ export default function TestPage() {
     }
   };
 
+  // 按钮点击事件
+  const handleItemBtn = (item, index) => {
+    console.log('点击了按钮：', item, index);
+  };
+
   return (
     <View className='test-page'>
       <ScrollLoad
@@ -94,7 +97,10 @@ export default function TestPage() {
       >
         {list.map((item, index) => (
           <View key={index} className='test-page__item'>
-            <Text>{item}</Text>
+            <Text className='test-page__text'>{item}</Text>
+            <View className='item-btn' onClick={() => handleItemBtn(item, index)}>
+              操作
+            </View>
           </View>
         ))}
       </ScrollLoad>
