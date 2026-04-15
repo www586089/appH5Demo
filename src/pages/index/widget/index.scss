@@ -13,7 +13,6 @@
   overflow: hidden;
 }
 
-/* 核心：提示跟随下拉平滑拉出，不突然显示 */
 .refresh-wrapper {
   position: absolute;
   left: 0;
@@ -63,9 +62,30 @@
   z-index: 10;
 }
 
-.load-more {
-  padding: 35rpx 0;
-  text-align: center;
-  font-size: 26rpx;
+.load-more-container {
+  width: 100%;
+  min-height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx 0;
+  box-sizing: border-box;
+}
+
+.load-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.load-text {
+  font-size: 16rpx;
   color: #999;
+  line-height: 1.2;
+}
+
+.load-empty {
+  width: 100%;
+  height: 20rpx;
 }

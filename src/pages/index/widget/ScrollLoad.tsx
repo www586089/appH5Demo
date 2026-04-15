@@ -28,14 +28,13 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   const isPulling = useRef(false);
 
   const [pullDown, setPullDown] = useState(0);
-  const [status, setStatus] = useState<'normal' | 'pull' | 'loosen' | 'refreshing' | 'success'>('normal');
+  const [status, setStatus] = useState('normal');
   const [lastRefreshTime, setLastRefreshTime] = useState('');
 
-  // 核心配置
   const REFRESH_LIMIT = 70;
-  const START_SHOW = 35; // 从这里开始慢慢拉出提示
+  const START_SHOW = 35;
 
-  const formatTime = (date: Date) => {
+  const formatTime = (date) => {
     const h = String(date.getHours()).padStart(2, '0');
     const m = String(date.getMinutes()).padStart(2, '0');
     const s = String(date.getSeconds()).padStart(2, '0');
@@ -119,13 +118,25 @@ export default function ScrollLoad(props: ScrollLoadProps) {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
         onScrollToLower={() => {
-          if (!loading && !finished && !refreshing) onLoadMore();
+          // ========== 删掉延迟，秒触发 ==========
+          if (!loading && !finished && !refreshing) {
+            onLoadMore();
+          }
         }}
       >
         {children}
-        <View className="load-more">
-          {loading && <View>加载中...</View>}
-          {finished && <View>—— 已加载完毕 ——</View>}
+
+        <View className="load-more-container">
+          {loading ? (
+            <View className="load-row">
+              <View className="loading-spin" />
+              <View className="load-text">加载中...</View>
+            </View>
+          ) : finished ? (
+            <View className="load-text">—— 已加载完毕 ——</View>
+          ) : (
+            <View className="load-empty" />
+          )}
         </View>
       </ScrollView>
     </View>
