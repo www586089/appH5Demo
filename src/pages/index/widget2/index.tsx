@@ -7,45 +7,71 @@ export default function ListPage() {
   const pullRef = useRef<PullRefreshViewRef>(null)
   const [list, setList] = useState<string[]>([])
   const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
+  const [retryCount, setRetryCount] = useState(0)
 
-  const fetchList = async (page: number) => {
-    return new Promise<string[]>((resolve) => {
+  // 模拟请求：最多 5 页，第2页前两次失败，第三次成功
+  const fetchList = async (pageNum: number) => {
+    return new Promise<string[]>((resolve, reject) => {
       setTimeout(() => {
-        const data = Array.from({ length: 20 }, (_, i) => {
-          return `第 ${page} 页 - 第 ${i + 1} 条数据`
-        })
+        // 超过 5 页 → 返回空
+        if (pageNum > 5) {
+          resolve([])
+          return
+        }
+
+        // 第2页：前两次失败，第三次成功
+        if (pageNum === 2 && retryCount < 2) {
+          reject(new Error('加载失败'))
+          return
+        }
+
+        // 正常数据
+        const data = Array.from({ length: 20 }, (_, i) => `第${pageNum}页 - 第${i + 1}条数据`)
         resolve(data)
       }, 1000)
     })
   }
 
+  // 下拉刷新
   const onRefresh = async () => {
-    const data = await fetchList(1)
-    setList(data)
+    setPage(1)
+    setRetryCount(0)
+    try {
+      const data = await fetchList(1)
+      setList(data)
+      setHasMore(true)
+    } catch {}
     pullRef.current?.onRefreshComplete()
   }
 
+  // 上拉加载
   const onLoadMore = async () => {
-    const currentPage = Math.floor(list.length / 20) + 1
-    const nextPage = currentPage + 1
+    if (!hasMore) return
 
-    if (nextPage > 5) {
-      setHasMore(false)
-      pullRef.current?.onLoadComplete(true)
-      return
+    const nextPage = page + 1
+    try {
+      const data = await fetchList(nextPage)
+
+      if (data.length === 0) {
+        setHasMore(false)
+        pullRef.current?.onLoadComplete(true)
+        return
+      }
+
+      setPage(nextPage)
+      setList(prev => [...prev, ...data])
+      setRetryCount(0)
+      pullRef.current?.onLoadComplete(false)
+    } catch (err) {
+      setRetryCount(prev => prev + 1)
+      pullRef.current?.onLoadError()
     }
-
-    const data = await fetchList(nextPage)
-    setList([...list, ...data])
-    pullRef.current?.onLoadComplete()
   }
 
+  // 初始化
   useEffect(() => {
-    const initLoad = async () => {
-      const data = await fetchList(1)
-      setList(data)
-    }
-    initLoad()
+    onRefresh()
   }, [])
 
   return (
