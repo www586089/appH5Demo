@@ -2,7 +2,7 @@ import { View, Text } from '@tarojs/components';
 import { useState, useEffect } from 'react';
 import ScrollLoad from './ScrollLoad';
 import Dialog from './dialog/Dialog';
-import './test-page.scss';
+import styles from './test-page.module.scss';
 
 // 模拟请求
 const fetchData = (page: number, pageSize: number = 20) => {
@@ -93,7 +93,7 @@ export default function TestPage() {
   };
 
   return (
-    <View className='test-page'>
+    <View className={styles['test-page']}>
       <ScrollLoad
         height={'100vh'}
         onRefresh={refresh}
@@ -106,9 +106,9 @@ export default function TestPage() {
       >
         {/* 你的原有列表 */}
         {list.map((item, index) => (
-          <View key={index} className='test-page__item'>
-            <Text className='test-page__text'>{item}</Text>
-            <View className='item-btn' onClick={() => handleItemBtn(item, index)}>
+          <View key={index} className={styles['test-page__item']}>
+            <Text className={styles['test-page__text']}>{item}</Text>
+            <View className={styles['item-btn']} onClick={() => handleItemBtn(item, index)}>
               操作
             </View>
           </View>

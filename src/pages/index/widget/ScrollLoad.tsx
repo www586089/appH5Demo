@@ -1,6 +1,6 @@
 import { View, ScrollView } from '@tarojs/components';
 import { useRef, useState } from 'react';
-import './index.scss';
+import styles from './index.module.scss';
 
 interface ScrollLoadProps {
   onRefresh: () => Promise<void>;
@@ -103,16 +103,16 @@ export default function ScrollLoad(props: ScrollLoadProps) {
   };
 
   return (
-    <View className="pull-scroll-box">
-      <View className="refresh-header" style={{ height: `${pullDown}px` }}>
-        <View className="refresh-wrapper">
-          <View className="refresh-row">
-            {status === 'refreshing' && <View className="loading-spin" />}
+    <View className={styles["pull-scroll-box"]}>
+      <View className={styles["refresh-header"]} style={{ height: `${pullDown}px` }}>
+        <View className={styles["refresh-wrapper"]}>
+          <View className={styles["refresh-row"]}>
+            {status === 'refreshing' && <View className={styles["loading-spin"]} />}
             <View className={`tip-text ${status === 'success' ? 'success' : ''}`}>
               {getTip()}
             </View>
             {lastRefreshTime && status !== 'refreshing' && (
-              <View className="time-text">上次刷新：{lastRefreshTime}</View>
+              <View className={styles["time-text"]}>上次刷新：{lastRefreshTime}</View>
             )}
           </View>
         </View>
@@ -120,7 +120,7 @@ export default function ScrollLoad(props: ScrollLoadProps) {
 
       <ScrollView
         ref={scrollRef}
-        className="scroll-view"
+        className={styles["scroll-view"]}
         style={{ height }}
         scrollY
         enhanced
@@ -135,20 +135,20 @@ export default function ScrollLoad(props: ScrollLoadProps) {
       >
         {children}
 
-        <View className="load-more-container">
+        <View className={styles["load-more-container"]}>
           {loading && (
-            <View className="load-row">
-              <View className="loading-spin" />
-              <View className="load-text">加载中...</View>
+            <View className={styles["load-row"]}>
+              <View className={styles["loading-spin"]} />
+              <View className={styles["load-text"]}>加载中...</View>
             </View>
           )}
 
           {finished && !loading && !loadError && (
-            <View className="load-text">—— 已加载完毕 ——</View>
+            <View className={styles["load-text"]}>—— 已加载完毕 ——</View>
           )}
 
           {loadError && !loading && (
-            <View className="load-error" onClick={handleRetry}>
+            <View className={styles["load-error"]} onClick={handleRetry}>
               加载失败，点击重试
             </View>
           )}
