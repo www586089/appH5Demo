@@ -6,7 +6,7 @@ import {
   forwardRef,
   ReactNode,
 } from 'react'
-import { View, ScrollView } from '@tarojs/components'
+import { View, ScrollView, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import styles from './PullRefreshView.module.scss'
 
@@ -56,7 +56,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
 
   useImperativeHandle(ref, () => ({
     onRefreshComplete: () => {
-      setRefreshText('✅ 刷新成功')
+      setRefreshText('✔ 刷新成功')
       setTimeout(() => {
         setPullDy(0)
         isRefreshingRef.current = false
@@ -86,9 +86,9 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
     setPullDy(pull)
 
     if (pull >= REFRESH_HEIGHT) {
-      setRefreshText('👆 释放刷新')
+      setRefreshText('↑ 释放刷新')
     } else {
-      setRefreshText('👇 下拉刷新')
+      setRefreshText('↓ 下拉刷新')
     }
   }
 
@@ -98,7 +98,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
     if (pullDy >= REFRESH_HEIGHT) {
       isRefreshingRef.current = true
       setPullDy(REFRESH_HEIGHT)
-      setRefreshText('🔄 正在刷新...')
+      setRefreshText('正在刷新...')
       onRefresh?.()
     } else {
       setPullDy(0)
@@ -136,23 +136,37 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
         showScrollbar={false}
         bounces
       >
-        <View 
-          className={styles.refreshHeader}
-          style={animStyle}
-        >
-          <View className={styles.refreshText}>{refreshText}</View>
+        <View className={styles.refreshHeader} style={animStyle}>
+          {/* 🔥 只保留箭头，文字里不再带箭头，彻底解决双箭头 */}
+          {!isRefreshingRef.current && (
+            <Text className={styles.arrow}>
+              {refreshText === '↑ 释放刷新' ? '↑' : refreshText === '↓ 下拉刷新' ? '↓' : ''}
+            </Text>
+          )}
+
+          {/* 刷新动画：仅刷新中显示 */}
+          {isRefreshingRef.current && refreshText === '正在刷新...' && <View className={styles.spin} />}
+
+          {/* 文字：纯文字，不带箭头 */}
+          <Text className={styles.refreshText}>
+            {refreshText === '↑ 释放刷新' ? '释放刷新' : 
+             refreshText === '↓ 下拉刷新' ? '下拉刷新' : 
+             refreshText}
+          </Text>
         </View>
 
-        <View 
-          className={styles.contentWrap}
-          style={animStyle}
-        >
+        <View className={styles.contentWrap} style={animStyle}>
           {children}
         </View>
 
         {enableLoadMore && (
           <View className={styles.loadMoreFooter}>
-            {loadStatus === 'loading' && '🔄 加载中...'}
+            {loadStatus === 'loading' && (
+              <View className={styles.loadRow}>
+                <View className={styles.spin} />
+                <Text>加载中...</Text>
+              </View>
+            )}
             {loadStatus === 'noMore' && '📌 没有更多了'}
             {loadStatus === 'error' && (
               <View onClick={() => {

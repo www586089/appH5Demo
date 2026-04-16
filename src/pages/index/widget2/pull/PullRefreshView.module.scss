@@ -18,12 +18,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   background: #d1e7ff;
   flex-shrink: 0;
   margin-top: -64px;
 }
 
 .refreshText {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.arrow {
   font-size: 28rpx;
   color: #333;
 }
@@ -42,4 +48,24 @@
   font-size: 26rpx;
   color: #888;
   background: #fff;
+}
+
+.loadRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spin {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.7s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
