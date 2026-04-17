@@ -6,15 +6,20 @@
 }
 
 .tableHeader {
-  height: 88rpx;
-  line-height: 88rpx;
-  padding: 0 30rpx;
-  background: #fff;
+  height: 72px;
+  background: #f8f8f8;
   border-bottom: 1rpx solid #eee;
 }
-
-.headerText {
-  font-size: 32rpx;
+.headerRow {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.headerCol {
+  flex: 1;
+  text-align: center;
+  font-size: 16rpx;
   font-weight: bold;
   color: #333;
 }
@@ -24,7 +29,6 @@
   overflow: hidden;
 }
 
-/* 列表项本身去掉 active 效果 */
 .listItem {
   height: 58px;
   padding: 0 30rpx;
@@ -32,28 +36,48 @@
   border-bottom: 1rpx solid #eee;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
-  cursor: default; /* 去掉手指 */
 }
 
-/* 👇 给文字区域单独加按压效果 */
-.itemText {
+/* 左侧内容区域 */
+.itemRow {
   flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition: background-color 0.2s ease;
+  min-width: 0;
+}
+.itemRow:active {
+  background-color: #f2f3f5;
+}
+
+/* 🔥 核心：文字自动缩小（最小6px）+ 放不下... */
+.itemCol {
+  flex: 1;
+  text-align: center;
   font-size: 19rpx;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 10rpx 0; /* 扩大点击区域 */
-  transition: background-color 0.2s ease;
+  
+  /* 自动缩放文字，最小 6px */
+  font-size-adjust: 1;
+  transform-origin: center;
+  animation: adjustFont 0.1s forwards;
 }
-.itemText:active {
-  background-color: #f2f3f5; /* 只有点文字才灰 */
+@keyframes adjustFont {
+  from { font-size: 19rpx; }
+  to { font-size: max(12rpx, min(19rpx, 6px)); }
 }
 
-/* 按钮：独立点击，互不干扰 */
+/* 🔥 按钮：固定不挤压 */
 .itemBtn {
   width: 72px;
+  flex-shrink: 0;
+  min-width: 72px;
   height: 36px;
   line-height: 36px;
   font-size: 16rpx;

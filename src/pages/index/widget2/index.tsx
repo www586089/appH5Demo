@@ -23,7 +23,10 @@ export default function ListPage() {
           reject(new Error('加载失败'))
           return
         }
-        const data = Array.from({ length: 20 }, (_, i) => `第${pageNum}页 - 第${i + 1}条数据`)
+        // 生成4列模拟数据
+        const data = Array.from({ length: 20 }, (_, i) => 
+          `内容${i+1}|内容${i+1}|内容${i+1}|内容${i+1}`
+        )
         resolve(data)
       }, 1000)
     })
@@ -61,7 +64,7 @@ export default function ListPage() {
     }
   }
 
-  // 👇 【新增】Item 整体点击事件（点击列表项触发）
+  // Item 整体点击事件
   const handleItemClick = (item, index) => {
     Taro.showToast({
       title: `点击了列表项 ${index + 1}`,
@@ -69,7 +72,7 @@ export default function ListPage() {
     })
   }
 
-  // 👇 【原有】按钮点击事件（点击按钮触发）
+  // 按钮点击事件
   const handleBtnClick = (item, index) => {
     Taro.showToast({
       title: `点击了操作按钮 ${index + 1}`,
@@ -83,36 +86,51 @@ export default function ListPage() {
 
   return (
     <View className={styles.pageContainer}>
+      {/* 🔥 优化：4列表头 */}
       <View className={styles.tableHeader}>
-        <Text className={styles.headerText}>列表数据表头</Text>
+        <View className={styles.headerRow}>
+          <Text className={styles.headerCol}>数据项1</Text>
+          <Text className={styles.headerCol}>数据项2</Text>
+          <Text className={styles.headerCol}>数据项3</Text>
+          <Text className={styles.headerCol}>数据项4</Text>
+        </View>
       </View>
 
       <View className={styles.listContent}>
         <PullRefreshView
-          height='calc(100vh - 88px)'
+          height='calc(100vh - 72px)'
           ref={pullRef}
           hasMore={hasMore}
           onRefresh={onRefresh}
           onLoadMore={onLoadMore}
           enableLoadMore
         >
-          {list.map((item, idx) => (
-            // 👇 给 Item 添加点击事件
-            <View key={idx} className={styles.listItem} onClick={() => handleItemClick(item, idx)}>
-              <Text className={styles.itemText}>{item}</Text>
-              
-              {/* 👇 按钮点击加 stopPropagation 防止触发 Item 点击 */}
-              <Button 
-                className={styles.itemBtn} 
-                onClick={(e) => {
-                  e.stopPropagation() // 关键：阻止事件冒泡
-                  handleBtnClick(item, idx)
-                }}
-              >
-                操作
-              </Button>
-            </View>
-          ))}
+          {list.map((item, idx) => {
+            // 分割为4列
+            const cols = item.split('|')
+            return (
+              <View key={idx} className={styles.listItem} onClick={() => handleItemClick(item, idx)}>
+                {/* 🔥 4列内容 */}
+                <View className={styles.itemRow}>
+                  <Text className={styles.itemCol}>{cols[0]}</Text>
+                  <Text className={styles.itemCol}>{cols[1]}</Text>
+                  <Text className={styles.itemCol}>{cols[2]}</Text>
+                  <Text className={styles.itemCol}>{cols[3]}</Text>
+                </View>
+                
+                {/* 按钮保持不变 */}
+                <Button 
+                  className={styles.itemBtn} 
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleBtnClick(item, idx)
+                  }}
+                >
+                  操作
+                </Button>
+              </View>
+            )
+          })}
         </PullRefreshView>
       </View>
     </View>
