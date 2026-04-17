@@ -25,9 +25,35 @@
 }
 
 .listItem {
-  padding: 26rpx 30rpx;
+  height: 58px;
+  padding: 0 30rpx;
   background: #fff;
   border-bottom: 1rpx solid #eee;
-  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 列表文字：原来 28rpx → 2/3 = 19rpx 左右，一行显示 */
+.itemText {
+  flex: 1;
+  font-size: 19rpx;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 按钮：固定72px，文字原来 24rpx → 2/3 = 16rpx */
+.itemBtn {
+  width: 72px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 16rpx;
+  color: #fff;
+  background: #007aff;
+  border: none;
+  border-radius: 6rpx;
+  text-align: center;
+  margin-left: 10px;
 }

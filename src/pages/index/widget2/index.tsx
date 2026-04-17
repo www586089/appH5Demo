@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import PullRefreshView, { PullRefreshViewRef } from './pull/PullRefreshView'
 import styles from './index.module.scss'
 
@@ -10,17 +11,13 @@ export default function ListPage() {
   const [page, setPage] = useState(1)
   const [retryCount, setRetryCount] = useState(0)
 
-  // 模拟请求：最多 5 页，第2页前两次失败，第三次成功
   const fetchList = async (pageNum: number) => {
     return new Promise<string[]>((resolve, reject) => {
       setTimeout(() => {
-        // 超过 5 页 → 返回空
         if (pageNum > 5) {
           resolve([])
           return
         }
-
-        // 第2页：前两次失败，第三次成功
         if (pageNum === 2 && retryCount < 2) {
           reject(new Error('加载失败'))
           return
@@ -31,7 +28,6 @@ export default function ListPage() {
     })
   }
 
-  // 下拉刷新
   const onRefresh = async () => {
     setPage(1)
     setRetryCount(0)
@@ -43,14 +39,11 @@ export default function ListPage() {
     pullRef.current?.onRefreshComplete()
   }
 
-  // 上拉加载
   const onLoadMore = async () => {
     if (!hasMore) return
-
     const nextPage = page + 1
     try {
       const data = await fetchList(nextPage)
-
       if (data.length === 0) {
         setHasMore(false)
       } else {
@@ -65,7 +58,13 @@ export default function ListPage() {
     }
   }
 
-  // 初始化
+  const handleItemClick = (item, index) => {
+    Taro.showToast({
+      title: `点击：第${index+1}项`,
+      icon: 'none'
+    })
+  }
+
   useEffect(() => {
     onRefresh()
   }, [])
@@ -86,7 +85,12 @@ export default function ListPage() {
           enableLoadMore
         >
           {list.map((item, idx) => (
-            <View key={idx} className={styles.listItem}>{item}</View>
+            <View key={idx} className={styles.listItem}>
+              <Text className={styles.itemText}>{item}</Text>
+              <Button className={styles.itemBtn} onClick={() => handleItemClick(item, idx)}>
+                操作
+              </Button>
+            </View>
           ))}
         </PullRefreshView>
       </View>
