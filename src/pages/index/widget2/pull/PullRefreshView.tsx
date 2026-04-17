@@ -45,6 +45,8 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
   const [pullDy, setPullDy] = useState(0)
   const [loadStatus, setLoadStatus] = useState<'idle' | 'loading' | 'noMore' | 'error'>('idle')
   const [refreshText, setRefreshText] = useState('')
+  // 新增：存储上次刷新时间，精确到秒
+  const [lastRefreshTime, setLastRefreshTime] = useState('')
 
   useEffect(() => {
     const sys = Taro.getSystemInfoSync()
@@ -54,9 +56,22 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
     }
   }, [height])
 
+  // 新增：格式化时间工具函数 → YYYY-MM-DD HH:mm:ss
+  const formatTime = (date: Date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const seconds = String(date.getSeconds()).padStart(2, '0')
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+  }
+
   useImperativeHandle(ref, () => ({
     onRefreshComplete: () => {
       setRefreshText('√刷新成功')
+      // 新增：刷新完成后，更新上次刷新时间为当前时间
+      setLastRefreshTime(formatTime(new Date()))
       setTimeout(() => {
         setPullDy(0)
         isRefreshingRef.current = false
@@ -142,7 +157,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
           {/* 🔥 只保留箭头，文字里不再带箭头，彻底解决双箭头 */}
           {!isRefreshingRef.current && (
             <Text className={styles.arrow}>
-              {refreshText === '↑ 释放刷新' ? '↑' : refreshText === '↓ 下拉Refresh' ? '↓' : ''}
+              {refreshText === '↑ 释放刷新' ? '↑' : refreshText === '↓ 下拉刷新' ? '↓' : ''}
             </Text>
           )}
 
@@ -155,6 +170,13 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
              refreshText === '↓ 下拉刷新' ? '下拉刷新' : 
              refreshText}
           </Text>
+
+          {/* 新增：上次刷新时间 → 下拉时显示、刷新中隐藏、无时间不显示 */}
+          {lastRefreshTime && pullDy > 0 && !isRefreshingRef.current && (
+            <Text className={styles.lastRefreshTime}>
+              上次刷新：{lastRefreshTime}
+            </Text>
+          )}
         </View>
 
         <View className={styles.contentWrap} style={animStyle}>
