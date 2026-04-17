@@ -25,8 +25,6 @@ export default function ListPage() {
           reject(new Error('加载失败'))
           return
         }
-
-        // 正常数据
         const data = Array.from({ length: 20 }, (_, i) => `第${pageNum}页 - 第${i + 1}条数据`)
         resolve(data)
       }, 1000)
@@ -37,10 +35,10 @@ export default function ListPage() {
   const onRefresh = async () => {
     setPage(1)
     setRetryCount(0)
+    setHasMore(true)
     try {
       const data = await fetchList(1)
       setList(data)
-      setHasMore(true)
     } catch {}
     pullRef.current?.onRefreshComplete()
   }
@@ -55,14 +53,12 @@ export default function ListPage() {
 
       if (data.length === 0) {
         setHasMore(false)
-        pullRef.current?.onLoadComplete(true)
-        return
+      } else {
+        setPage(nextPage)
+        setList(prev => [...prev, ...data])
+        setRetryCount(0)
       }
-
-      setPage(nextPage)
-      setList(prev => [...prev, ...data])
-      setRetryCount(0)
-      pullRef.current?.onLoadComplete(false)
+      pullRef.current?.onLoadComplete(data.length === 0)
     } catch (err) {
       setRetryCount(prev => prev + 1)
       pullRef.current?.onLoadError()

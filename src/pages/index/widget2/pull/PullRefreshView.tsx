@@ -6,7 +6,7 @@ import {
   forwardRef,
   ReactNode,
 } from 'react'
-import { View, ScrollView, Text } from '@tarojs/components'
+import { View, ScrollView, Text, ITouchEvent } from '@tarojs/components' // 正确类型：ITouchEvent
 import Taro from '@tarojs/taro'
 import styles from './PullRefreshView.module.scss'
 
@@ -56,7 +56,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
 
   useImperativeHandle(ref, () => ({
     onRefreshComplete: () => {
-      setRefreshText('✔ 刷新成功')
+      setRefreshText('√刷新成功')
       setTimeout(() => {
         setPullDy(0)
         isRefreshingRef.current = false
@@ -71,12 +71,13 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
     },
   }))
 
-  const onTouchStart = (e: React.TouchEvent) => {
+  // Taro 官方正确触摸事件类型，无警告
+  const onTouchStart = (e: ITouchEvent) => {
     if (scrollTop !== 0 || isRefreshingRef.current) return
     startYRef.current = e.touches[0].clientY
   }
 
-  const onTouchMove = (e: React.TouchEvent) => {
+  const onTouchMove = (e: ITouchEvent) => {
     if (scrollTop !== 0 || isRefreshingRef.current) return
 
     const dy = e.touches[0].clientY - startYRef.current
@@ -100,6 +101,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
       setPullDy(REFRESH_HEIGHT)
       setRefreshText('正在刷新...')
       onRefresh?.()
+      setLoadStatus('idle') // ✅ 【修复bug】下拉刷新重置底部加载状态，隐藏“没有更多了”
     } else {
       setPullDy(0)
       setRefreshText('')
@@ -140,7 +142,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
           {/* 🔥 只保留箭头，文字里不再带箭头，彻底解决双箭头 */}
           {!isRefreshingRef.current && (
             <Text className={styles.arrow}>
-              {refreshText === '↑ 释放刷新' ? '↑' : refreshText === '↓ 下拉刷新' ? '↓' : ''}
+              {refreshText === '↑ 释放刷新' ? '↑' : refreshText === '↓ 下拉Refresh' ? '↓' : ''}
             </Text>
           )}
 
@@ -172,7 +174,8 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
               <View onClick={() => {
                 setLoadStatus('loading')
                 onLoadMore?.()
-              }}>❌ 加载失败，点击重试</View>
+              }}
+              >❌ 加载失败，点击重试</View>
             )}
           </View>
         )}
