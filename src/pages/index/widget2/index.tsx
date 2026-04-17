@@ -78,6 +78,7 @@ export default function ListPage() {
 
       <View className={styles.listContent}>
         <PullRefreshView
+          height='calc(100vh - 88px)'
           ref={pullRef}
           hasMore={hasMore}
           onRefresh={onRefresh}

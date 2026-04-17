@@ -17,7 +17,7 @@ export interface PullRefreshViewRef {
 }
 
 export interface PullRefreshViewProps {
-  height?: number
+  height?: number | string
   enableLoadMore?: boolean
   hasMore?: boolean
   onRefresh: () => void
@@ -50,7 +50,7 @@ const PullRefreshView = forwardRef<PullRefreshViewRef, PullRefreshViewProps>((pr
     const sys = Taro.getSystemInfoSync()
     const h = height || sys.windowHeight - 88
     if (scrollRef.current) {
-      scrollRef.current.style.height = `${h}px`
+      scrollRef.current.style.height = h
     }
   }, [height])
 
