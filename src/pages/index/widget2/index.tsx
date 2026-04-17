@@ -11,6 +11,7 @@ export default function ListPage() {
   const [page, setPage] = useState(1)
   const [retryCount, setRetryCount] = useState(0)
 
+  // 模拟请求
   const fetchList = async (pageNum: number) => {
     return new Promise<string[]>((resolve, reject) => {
       setTimeout(() => {
@@ -28,6 +29,7 @@ export default function ListPage() {
     })
   }
 
+  // 下拉刷新
   const onRefresh = async () => {
     setPage(1)
     setRetryCount(0)
@@ -39,6 +41,7 @@ export default function ListPage() {
     pullRef.current?.onRefreshComplete()
   }
 
+  // 上拉加载
   const onLoadMore = async () => {
     if (!hasMore) return
     const nextPage = page + 1
@@ -58,9 +61,18 @@ export default function ListPage() {
     }
   }
 
+  // 👇 【新增】Item 整体点击事件（点击列表项触发）
   const handleItemClick = (item, index) => {
     Taro.showToast({
-      title: `点击：第${index+1}项`,
+      title: `点击了列表项 ${index + 1}`,
+      icon: 'none'
+    })
+  }
+
+  // 👇 【原有】按钮点击事件（点击按钮触发）
+  const handleBtnClick = (item, index) => {
+    Taro.showToast({
+      title: `点击了操作按钮 ${index + 1}`,
       icon: 'none'
     })
   }
@@ -85,9 +97,18 @@ export default function ListPage() {
           enableLoadMore
         >
           {list.map((item, idx) => (
-            <View key={idx} className={styles.listItem}>
+            // 👇 给 Item 添加点击事件
+            <View key={idx} className={styles.listItem} onClick={() => handleItemClick(item, idx)}>
               <Text className={styles.itemText}>{item}</Text>
-              <Button className={styles.itemBtn} onClick={() => handleItemClick(item, idx)}>
+              
+              {/* 👇 按钮点击加 stopPropagation 防止触发 Item 点击 */}
+              <Button 
+                className={styles.itemBtn} 
+                onClick={(e) => {
+                  e.stopPropagation() // 关键：阻止事件冒泡
+                  handleBtnClick(item, idx)
+                }}
+              >
                 操作
               </Button>
             </View>

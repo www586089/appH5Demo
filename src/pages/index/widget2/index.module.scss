@@ -24,6 +24,7 @@
   overflow: hidden;
 }
 
+/* 列表项本身去掉 active 效果 */
 .listItem {
   height: 58px;
   padding: 0 30rpx;
@@ -32,9 +33,10 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  cursor: default; /* 去掉手指 */
 }
 
-/* 列表文字：原来 28rpx → 2/3 = 19rpx 左右，一行显示 */
+/* 👇 给文字区域单独加按压效果 */
 .itemText {
   flex: 1;
   font-size: 19rpx;
@@ -42,9 +44,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 10rpx 0; /* 扩大点击区域 */
+  transition: background-color 0.2s ease;
+}
+.itemText:active {
+  background-color: #f2f3f5; /* 只有点文字才灰 */
 }
 
-/* 按钮：固定72px，文字原来 24rpx → 2/3 = 16rpx */
+/* 按钮：独立点击，互不干扰 */
 .itemBtn {
   width: 72px;
   height: 36px;
