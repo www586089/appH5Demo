@@ -10,74 +10,98 @@
   background: #f8f8f8;
   border-bottom: 1rpx solid #eee;
 }
+
 .headerRow {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 30rpx;
+  padding: 0 16px;
 }
+
+/* 表头列 - 加背景色区分 */
 .headerCol {
   flex: 1;
-  text-align: center;
   font-size: 16rpx;
   font-weight: bold;
   color: #333;
+  background-color: #e8f4f8;
+  border: 1rpx solid #d1e7dd;
 }
+/* 表头对齐：左、右、左、右 */
+.headerCol:nth-child(1) { text-align: left; }
+.headerCol:nth-child(2) { 
+  text-align: right; 
+  /* 🔥 只在第二列右侧加 8px 间距 */
+  margin-right: 8px; 
+}
+.headerCol:nth-child(3) { text-align: left; }
+.headerCol:nth-child(4) { text-align: right; }
 
 .listContent {
   flex: 1;
   overflow: hidden;
 }
 
+.itemContainer {
+  position: relative;
+  height: 58px;
+  box-sizing: border-box;
+}
+
 .listItem {
   height: 58px;
-  padding: 0 30rpx;
+  padding: 0 16px;
   background: #fff;
   border-bottom: 1rpx solid #eee;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   box-sizing: border-box;
+  transition: background-color 0.2s ease;
 }
 
-/* 左侧内容区域 */
+.listItem:active {
+  background-color: #f2f3f5;
+}
+
 .itemRow {
   flex: 1;
   display: flex;
   align-items: center;
-  height: 100%;
-  transition: background-color 0.2s ease;
   min-width: 0;
 }
-.itemRow:active {
-  background-color: #f2f3f5;
+
+.space8 {
+  width: 8px;
+  flex-shrink: 0;
 }
 
-/* 🔥 核心：文字自动缩小（最小6px）+ 放不下... */
+/* 数据列 - 加背景色区分（和表头对应） */
 .itemCol {
   flex: 1;
-  text-align: center;
   font-size: 19rpx;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
-  /* 自动缩放文字，最小 6px */
-  font-size-adjust: 1;
-  transform-origin: center;
-  animation: adjustFont 0.1s forwards;
+  background-color: #f0f8fb;
+  border: 1rpx solid #bcdff1;
 }
-@keyframes adjustFont {
-  from { font-size: 19rpx; }
-  to { font-size: max(12rpx, min(19rpx, 6px)); }
+/* 数据对齐：左、右、左、右 */
+.itemCol:nth-child(1) { text-align: left; }
+.itemCol:nth-child(2) { text-align: right; }
+.itemCol:nth-child(3) { text-align: left; }
+.itemCol:nth-child(4) { text-align: right; }
+
+.btnWrapper {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
 }
 
-/* 🔥 按钮：固定不挤压 */
 .itemBtn {
   width: 72px;
-  flex-shrink: 0;
-  min-width: 72px;
   height: 36px;
   line-height: 36px;
   font-size: 16rpx;
@@ -86,5 +110,5 @@
   border: none;
   border-radius: 6rpx;
   text-align: center;
-  margin-left: 10px;
+  flex-shrink: 0;
 }

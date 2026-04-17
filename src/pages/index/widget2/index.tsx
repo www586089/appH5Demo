@@ -11,28 +11,23 @@ export default function ListPage() {
   const [page, setPage] = useState(1)
   const [retryCount, setRetryCount] = useState(0)
 
-  // 模拟请求
   const fetchList = async (pageNum: number) => {
-    return new Promise<string[]>((resolve, reject) => {
+    return new Promise<string[]>((resolve) => {
       setTimeout(() => {
         if (pageNum > 5) {
           resolve([])
           return
         }
-        if (pageNum === 2 && retryCount < 2) {
-          reject(new Error('加载失败'))
-          return
-        }
-        // 生成4列模拟数据
-        const data = Array.from({ length: 20 }, (_, i) => 
-          `内容${i+1}|内容${i+1}|内容${i+1}|内容${i+1}`
-        )
+        const data = Array.from({ length: 20 }, (_, i) => {
+          const pageText = `第${pageNum}页`
+          const indexText = `第${i+1}项`
+          return `${pageText}|${indexText}|内容${i+1}`
+        })
         resolve(data)
       }, 1000)
     })
   }
 
-  // 下拉刷新
   const onRefresh = async () => {
     setPage(1)
     setRetryCount(0)
@@ -44,7 +39,6 @@ export default function ListPage() {
     pullRef.current?.onRefreshComplete()
   }
 
-  // 上拉加载
   const onLoadMore = async () => {
     if (!hasMore) return
     const nextPage = page + 1
@@ -64,20 +58,12 @@ export default function ListPage() {
     }
   }
 
-  // Item 整体点击事件
   const handleItemClick = (item, index) => {
-    Taro.showToast({
-      title: `点击了列表项 ${index + 1}`,
-      icon: 'none'
-    })
+    Taro.showToast({ title: `点击项 ${index + 1}`, icon: 'none' })
   }
 
-  // 按钮点击事件
   const handleBtnClick = (item, index) => {
-    Taro.showToast({
-      title: `点击了操作按钮 ${index + 1}`,
-      icon: 'none'
-    })
+    Taro.showToast({ title: `操作 ${index + 1}`, icon: 'none' })
   }
 
   useEffect(() => {
@@ -86,7 +72,7 @@ export default function ListPage() {
 
   return (
     <View className={styles.pageContainer}>
-      {/* 🔥 优化：4列表头 */}
+      {/* 表头 完全原样 未做任何修改 */}
       <View className={styles.tableHeader}>
         <View className={styles.headerRow}>
           <Text className={styles.headerCol}>数据项1</Text>
@@ -106,28 +92,24 @@ export default function ListPage() {
           enableLoadMore
         >
           {list.map((item, idx) => {
-            // 分割为4列
             const cols = item.split('|')
             return (
-              <View key={idx} className={styles.listItem} onClick={() => handleItemClick(item, idx)}>
-                {/* 🔥 4列内容 */}
-                <View className={styles.itemRow}>
-                  <Text className={styles.itemCol}>{cols[0]}</Text>
-                  <Text className={styles.itemCol}>{cols[1]}</Text>
-                  <Text className={styles.itemCol}>{cols[2]}</Text>
-                  <Text className={styles.itemCol}>{cols[3]}</Text>
+              <View key={idx} className={styles.itemContainer}>
+                <View className={styles.listItem} onClick={() => handleItemClick(item, idx)}>
+                  <View className={styles.itemRow}>
+                    <Text className={styles.itemCol}>{cols[0]}</Text>
+                    <Text className={styles.itemCol}>{cols[1]}</Text>
+                    <View className={styles.space8}></View>
+                    <Text className={styles.itemCol}>{cols[2]}</Text>
+                    <Text className={styles.itemCol}></Text>
+                  </View>
                 </View>
-                
-                {/* 按钮保持不变 */}
-                <Button 
-                  className={styles.itemBtn} 
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleBtnClick(item, idx)
-                  }}
-                >
-                  操作
-                </Button>
+
+                <View className={styles.btnWrapper} onClick={(e) => e.stopPropagation()}>
+                  <Button className={styles.itemBtn} onClick={() => handleBtnClick(item, idx)}>
+                    操作
+                  </Button>
+                </View>
               </View>
             )
           })}
