@@ -89,8 +89,8 @@
 /* 数据对齐：左、右、左、右 */
 .itemCol:nth-child(1) { text-align: left; }
 .itemCol:nth-child(2) { text-align: right; }
-.itemCol:nth-child(3) { text-align: left; }
-.itemCol:nth-child(4) { text-align: right; }
+// .itemCol:nth-child(3) { text-align: left; }
+.itemCol:nth-child(4) { text-align: left; }
 
 .btnWrapper {
   position: absolute;
