@@ -3,6 +3,7 @@ import { View, Text, Button } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import PullRefreshView, { PullRefreshViewRef } from './pull/PullRefreshView'
 import styles from './index.module.scss'
+import Dialog from './dialog/Dialog'
 
 export default function ListPage() {
   const pullRef = useRef<PullRefreshViewRef>(null)
@@ -11,19 +12,31 @@ export default function ListPage() {
   const [page, setPage] = useState(1)
   const [retryCount, setRetryCount] = useState(0)
 
+  // 弹窗状态
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [currentItem, setCurrentItem] = useState('')
+
+  // 模拟接口：第2页会失败，用于测试重试
   const fetchList = async (pageNum: number) => {
-    return new Promise<string[]>((resolve) => {
+    return new Promise<string[]>((resolve, reject) => {
       setTimeout(() => {
         if (pageNum > 5) {
           resolve([])
           return
         }
-        const data = Array.from({ length: 20 }, (_, i) => {
-          const pageText = `第${pageNum}页`
-          const indexText = `第${i+1}项`
-          return `${pageText}|${indexText}|内容${i+1}`
-        })
-        resolve(data)
+
+        // 模拟：第2页报错
+        if (pageNum === 2 && retryCount < 2) {
+          reject(new Error('加载失败'))
+        } else {
+          // 成功
+          const data = Array.from({ length: 20 }, (_, i) => {
+            const pageText = `第${pageNum}页`
+            const indexText = `第${i+1}项`
+            return `${pageText}|${indexText}|内容${i+1}`
+          })
+          resolve(data)
+        }
       }, 1000)
     })
   }
@@ -42,6 +55,7 @@ export default function ListPage() {
   const onLoadMore = async () => {
     if (!hasMore) return
     const nextPage = page + 1
+
     try {
       const data = await fetchList(nextPage)
       if (data.length === 0) {
@@ -62,8 +76,9 @@ export default function ListPage() {
     Taro.showToast({ title: `点击项 ${index + 1}`, icon: 'none' })
   }
 
-  const handleBtnClick = (item, index) => {
-    Taro.showToast({ title: `操作 ${index + 1}`, icon: 'none' })
+  const handleBtnClick = (item: string) => {
+    setCurrentItem(item)
+    setDialogVisible(true)
   }
 
   useEffect(() => {
@@ -72,7 +87,6 @@ export default function ListPage() {
 
   return (
     <View className={styles.pageContainer}>
-      {/* 表头 完全原样 未做任何修改 */}
       <View className={styles.tableHeader}>
         <View className={styles.headerRow}>
           <Text className={styles.headerCol}>数据项1</Text>
@@ -106,7 +120,7 @@ export default function ListPage() {
                 </View>
 
                 <View className={styles.btnWrapper} onClick={(e) => e.stopPropagation()}>
-                  <Button className={styles.itemBtn} onClick={() => handleBtnClick(item, idx)}>
+                  <Button className={styles.itemBtn} onClick={() => handleBtnClick(item)}>
                     操作
                   </Button>
                 </View>
@@ -115,6 +129,33 @@ export default function ListPage() {
           })}
         </PullRefreshView>
       </View>
+
+      <Dialog
+        isOpened={dialogVisible}
+        title="操作提示"
+        renderContent={
+          <View>
+            <Text>当前数据：{currentItem}</Text>
+          </View>
+        }
+        buttons={[
+          {
+            title: '取消',
+            type: 'cancel',
+            callback: () => {
+              setDialogVisible(false)
+            }
+          },
+          {
+            title: '确定',
+            type: 'confirm',
+            callback: () => {
+              Taro.showToast({ title: '操作成功', icon: 'success' })
+              setDialogVisible(false)
+            }
+          }
+        ]}
+      />
     </View>
   )
 }
